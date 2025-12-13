@@ -1,0 +1,33 @@
+.dp-input, .dp-select{
+  width:100%;
+  background:rgba(0,0,0,.22);
+  border:1px solid var(--border-steel);
+  color:var(--text-main);
+  padding:10px 12px;
+  border-radius:12px;
+}
+
+.dp-chat{ margin-top:10px; }
+.dp-chatLog{
+  height:260px;
+  overflow:auto;
+  border:1px solid var(--border-steel);
+  border-radius:12px;
+  background:rgba(0,0,0,.20);
+  padding:10px;
+  margin-bottom:10px;
+}
+
+.dp-bubble{
+  margin-bottom:8px;
+  padding:8px 10px;
+  border-radius:12px;
+  border:1px solid var(--border-steel);
+  background:rgba(255,255,255,.03);
+  color:var(--text-secondary);
+}
+.dp-bubble.me{ border-color:rgba(255,176,0,.35); }
+.dp-bubble.sys{ border-style:dashed; opacity:.9; }
+
+.dp-hint{ margin-top:10px; color:var(--text-muted); font-size:12px; }
+vvvvvvvvvvvvvvvvvvv

@@ -1,0 +1,126 @@
+:root{
+  --bg:#0f1113;
+  --panel:#1b1f24;
+  --ink:#e9e4d6;
+  --muted:#b7b1a1;
+  --accent:#f6c35c;
+  --danger:#ff5b5b;
+  --ok:#7dff8b;
+  --line:rgba(255,255,255,.08);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(246,195,92,.10), transparent 35%),
+    radial-gradient(circle at 80% 90%, rgba(255,91,91,.10), transparent 45%),
+    linear-gradient(180deg, #0b0d0f, #121518);
+  color:var(--ink);
+}
+
+.wrap{max-width:1200px;margin:0 auto;padding:18px}
+.topbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 16px;border:1px solid var(--line);border-radius:14px;
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+}
+.topbar h1{margin:0;font-size:22px;letter-spacing:.6px}
+.sub{margin:3px 0 0;color:var(--muted);font-size:12px}
+.status{display:flex;gap:10px;align-items:center;color:var(--muted);font-size:12px}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--ok);box-shadow:0 0 18px rgba(125,255,139,.7)}
+
+.grid{
+  display:grid;
+  grid-template-columns: 1.1fr 1.2fr 0.9fr;
+  gap:14px;
+  margin-top:14px;
+}
+@media (max-width: 1050px){
+  .grid{grid-template-columns:1fr; }
+}
+
+.panel{
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px;
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+}
+.panel h2{margin:0 0 10px;font-size:16px}
+.tiny{margin:0;color:var(--muted);font-size:12px}
+
+.form .row{margin-bottom:12px}
+label{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}
+input[type="text"], input[type="number"], select{
+  width:100%; padding:10px 10px;
+  border-radius:10px;border:1px solid var(--line);
+  background:#0f1216;color:var(--ink);
+  outline:none;
+}
+select{cursor:pointer}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.chips{
+  display:flex;flex-wrap:wrap;gap:8px;
+}
+.chips label{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 10px;margin:0;
+  border:1px solid var(--line);border-radius:999px;
+  background:rgba(0,0,0,.25);
+  cursor:pointer;color:var(--ink);font-size:12px;
+}
+.chips input{accent-color: var(--accent);}
+
+.rangeHints{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin-top:6px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+button{
+  padding:10px 12px;border-radius:12px;border:1px solid rgba(246,195,92,.35);
+  background:linear-gradient(180deg, rgba(246,195,92,.24), rgba(246,195,92,.10));
+  color:var(--ink);cursor:pointer;font-weight:700;
+}
+button:hover{filter:brightness(1.08)}
+button.ghost{
+  border:1px solid var(--line);
+  background:rgba(0,0,0,.18);
+  color:var(--muted);
+}
+
+.radarWrap{display:flex;justify-content:center;align-items:center;padding:8px}
+#radarCanvas{
+  border-radius:16px;
+  border:1px solid var(--line);
+  background:radial-gradient(circle at 50% 50%, rgba(246,195,92,.09), rgba(0,0,0,.15));
+}
+
+.log{margin-top:10px}
+.log h3{margin:0 0 8px;font-size:13px;color:var(--muted)}
+.logBox{
+  height:160px; overflow:auto;
+  border:1px solid var(--line); border-radius:12px;
+  padding:10px;background:rgba(0,0,0,.18);
+}
+.logLine{font-size:12px;color:var(--ink);margin:0 0 6px}
+.logLine.muted{color:var(--muted)}
+.logLine.bad{color:var(--danger)}
+.logLine.good{color:var(--ok)}
+
+.matchList{display:flex;flex-direction:column;gap:10px}
+.card{
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:10px;
+  background:rgba(0,0,0,.18);
+}
+.cardTop{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.badge{
+  padding:4px 8px;border-radius:999px;font-size:11px;border:1px solid var(--line);
+  color:var(--muted);
+}
+.badge.perfect{border-color:rgba(125,255,139,.4);color:var(--ok)}
+.badge.compatible{border-color:rgba(246,195,92,.45);color:var(--accent)}
+.badge.weird{border-color:rgba(255,255,255,.2);color:var(--muted)}
+.badge.disaster,.badge.dangerous{border-color:rgba(255,91,91,.45);color:var(--danger)}
+.card p{margin:8px 0 0;color:var(--ink);font-size:12px;line-height:1.35}
+.meta{margin-top:8px;color:var(--muted);font-size:11px}

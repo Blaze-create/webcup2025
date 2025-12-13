@@ -28,7 +28,8 @@ Route::middleware('web')->group(function () {
     Route::post('/radar/matches', [RadarController::class, 'matches'])->name('radar.matches');
 });
 
-Route::get('/chat/{candidateId}', [ChatController::class, 'show'])->name('chat.show');
+Route::get('chats/chat',[RadarController::class,'matches'])->name('chat.matches');
+
 
 
 require __DIR__.'/auth.php';

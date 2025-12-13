@@ -84,9 +84,16 @@ function tierToBadgeClass(tier) {
 }
 
 function renderMatches(results) {
+  console.log(results);
   els.matchList.innerHTML = "";
 
   results.forEach((m, i) => {
+
+    const link = document.createElement('a');
+    link.href = `/matches/${m.name}`;   // <-- Laravel route
+    link.className = 'match-link';         // for styling
+    link.style.textDecoration = 'none';
+
     const card = document.createElement('div');
     card.className = 'card';
 
@@ -109,7 +116,9 @@ function renderMatches(results) {
     card.appendChild(top);
     card.appendChild(p);
 
-    els.matchList.appendChild(card);
+    link.appendChild(card);
+    els.matchList.appendChild(link);
+
 
     // Create blips for radar
     const angle = (Math.PI * 2) * ((i + 1) / (results.length + 1));

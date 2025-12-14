@@ -8,6 +8,7 @@ use App\Models\Profile;
 use App\Services\AiMatchService;
 
 use App\Models\Like;
+use App\Models\User;
 
 class RadarController extends Controller
 {
@@ -32,46 +33,45 @@ class RadarController extends Controller
         ]);
 
         // Save/update my profile
-            if (Auth::check()) {
-                Profile::updateOrCreate(
-                    ['user_id' => Auth::id()],
-                    array_merge($data, ['user_id' => Auth::id()])
-                );
-            }
+        if (Auth::check()) {
+            Profile::updateOrCreate(
+                ['user_id' => Auth::id()],
+                array_merge($data, ['user_id' => Auth::id()])
+            );
+        }
 
-            $candidatesQuery = Profile::query()->limit(50);
+        $candidatesQuery = Profile::query()->limit(50);
 
-            if (Auth::check()) {
-                $me = Auth::id();
+        if (Auth::check()) {
+            $me = Auth::id();
 
-                // all users I already liked
-                $likedIds = Like::where('liker_id', $me)->pluck('liked_id');
+            // all users I already liked
+            $likedIds = Like::where('liker_id', $me)->pluck('liked_id');
 
-                $candidatesQuery
-                    ->where('user_id', '!=', $me)                  // not me
-                    ->whereNotIn('user_id', $likedIds);            // not already liked
-            }
+            $candidatesQuery
+                ->where('user_id', '!=', $me)                  // not me
+                ->whereNotIn('user_id', $likedIds);            // not already liked
+        }
 
-            $candidates = $candidatesQuery->get(); // Collection
+        $candidates = $candidatesQuery->get(); // Collection
 
-            // ✅ NO CANDIDATES
-            if ($candidates->isEmpty()) {
-                return response()->json([
-                    'ok' => true,
-                    'count' => 0,
-                    'results' => [],
-                    'message' => 'No candidates available yet. Ask an admin to seed more profiles/users.',
-                ]);
-            }
-
-            $results = $ai->rankMatches($data, $candidates->all()); // array passed to service
-
+        // ✅ NO CANDIDATES
+        if ($candidates->isEmpty()) {
             return response()->json([
                 'ok' => true,
-                'count' => count($results),
-                'results' => $results,
+                'count' => 0,
+                'results' => [],
+                'message' => 'No candidates available yet. Ask an admin to seed more profiles/users.',
             ]);
+        }
 
+        $results = $ai->rankMatches($data, $candidates->all()); // array passed to service
+
+        return response()->json([
+            'ok' => true,
+            'count' => count($results),
+            'results' => $results,
+        ]);
     }
 
 
@@ -92,7 +92,22 @@ class RadarController extends Controller
         ]);
     }
 
+    public function mutualLikes()
+    {
+        $me = Auth::id();
 
+        $matchedIds = Like::query()
+            ->from('likes as l1')
+            ->join('likes as l2', function ($join) {
+                $join->on('l1.liked_id', '=', 'l2.liker_id')
+                    ->on('l1.liker_id', '=', 'l2.liked_id');
+            })
+            ->where('l1.liker_id', $me)
+            ->distinct()
+            ->pluck('l1.liked_id');
 
-    
+        $matches = User::whereIn('id', $matchedIds)->get();
+
+        return view('match.matches', compact('matches'));
+    }
 }

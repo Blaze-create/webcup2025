@@ -11,6 +11,9 @@
 </head>
 
 <body>
+
+
+
   <header>
     <div class="wrap">
       <div class="nav">
@@ -30,7 +33,23 @@
           <strong>Your Matches</strong>
           <span>Click “Open Chat” to enter a private channel.</span>
         </div>
-        <div class="body" id="list"></div>
+        <div class="body" id="list">
+
+
+
+ @foreach ($matches as $user)
+        <div class="match">
+            <div>
+              <strong>{{ $user->name }}</strong>
+              <small>
+                Alliance • 87% compat • risk 55/100 • comms Radio
+              </small>
+            </div>
+            <button class="btn" data-id="5">Open Chat</button>
+          </div>
+      @endforeach
+
+        </div>
       </section>
 
       <aside class="panel">
@@ -57,7 +76,7 @@
     </div>
   </main>
 
-  <script src="/js/matches.js"></script>
+  <!-- <script src="/js/matches.js"></script> -->
 
 </body>
 

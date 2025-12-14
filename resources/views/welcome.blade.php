@@ -1587,8 +1587,7 @@ window.addEventListener('load', hideSpinner);
                     <div class="reconText">
                         <h2>Recon Images</h2>
                         <p>
-                            A secondary image wall for the landing page—perfect for screenshots, team photos, gameplay captures, or “world-building” visuals.
-                            Each photo floats subtly and reacts to cursor movement.
+                           So you here you can see a lot of image of our world and also people that our website has matched together and they are still together .
                         </p>
                         <div class="reconChips">
                             <span class="chip" style="pointer-events:none;">Animated</span>

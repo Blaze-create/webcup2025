@@ -963,6 +963,7 @@ window.addEventListener('load', hideSpinner);
                 <div class="cta">
                     @auth
                     <a class="btn btn-ghost" id="btnDemo" href="{{ route('match.page') }}">Find Match</a>
+                    <a class="btn btn-ghost" id="btnDemo" href="{{ route('dashboard') }}">Dashboard</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
 

@@ -157,7 +157,7 @@ body {
       <p>Operator Console • Secure Channel</p>
     </div>
 
-    <a class="btn" href="{{ route('match.page') }}">← Back</a>
+    <a class="btn" href="{{ route('home') }}">← Back</a>
   </div>
 </header>
 

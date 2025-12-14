@@ -6,50 +6,60 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\MatchModel;
 use App\Models\Message;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\Like;
 
 
 class ChatController extends Controller
 {
-    //     public function show(string $candidateId)
-    // {
-    //     // candidateId is passed to the Blade view
-    //     return view('chat.show', [
-    //         'candidateId' => $candidateId,
-    //     ]);
-    //}
-      private function assertUserOwnsMatch(MatchModel $match)
+    public function show(User $user)
     {
-        $me = auth()->id();
-        if ($match->user_one_id !== $me && $match->user_two_id !== $me) {
-            abort(403);
-        }
+        $me = Auth::id();
+        $receiver = User::findOrFail($user->id);
+
+        // 🔒 SECURITY: only allow chat if mutual like exists
+        $isMatch =
+            Like::where('liker_id', $me)->where('liked_id', $user->id)->exists() &&
+            Like::where('liker_id', $user->id)->where('liked_id', $me)->exists();
+
+        abort_unless($isMatch, 403);
+
+        // Load conversation
+        $messages = Message::where(function ($q) use ($me, $user) {
+            $q->where('sender_id', $me)->where('receiver_id', $user->id);
+        })
+            ->orWhere(function ($q) use ($me, $user) {
+                $q->where('sender_id', $user->id)->where('receiver_id', $me);
+            })
+            ->orderBy('created_at')
+            ->get();
+
+        return view('match.show', compact('user', 'messages', 'receiver'));
     }
 
-    public function messages(MatchModel $match)
+    public function send(Request $request, User $user)
     {
-        $this->assertUserOwnsMatch($match);
+        $me = Auth::id();
 
-        $msgs = Message::where('match_id', $match->id)
-            ->orderBy('created_at', 'asc')
-            ->get(['id','sender_id','content','created_at']);
+        // 🔒 SECURITY: allow only mutual matches
+        $isMatch =
+            Like::where('liker_id', $me)->where('liked_id', $user->id)->exists() &&
+            Like::where('liker_id', $user->id)->where('liked_id', $me)->exists();
 
-        return response()->json(['ok' => true, 'messages' => $msgs]);
-    }
+        abort_unless($isMatch, 403);
 
-    public function send(Request $request, MatchModel $match)
-    {
-        $this->assertUserOwnsMatch($match);
-
-        $data = $request->validate([
-            'content' => 'required|string|max:2000',
+        $request->validate([
+            'body' => 'required|string|max:2000',
         ]);
 
-        $msg = Message::create([
-            'match_id' => $match->id,
-            'sender_id' => auth()->id(),
-            'content' => $data['content'],
+        Message::create([
+            'sender_id'   => $me,
+            'receiver_id' => $user->id,
+            'body'        => $request->body,
         ]);
 
-        return response()->json(['ok' => true, 'message' => $msg]);
+        // Redirect back to chat
+        return redirect()->route('chat.show', $user->id);
     }
 }

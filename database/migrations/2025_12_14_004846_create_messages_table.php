@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('sender_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('receiver_id')->constrained('users')->cascadeOnDelete();
-
             $table->text('body');
-            $table->timestamp('read_at')->nullable();
             $table->timestamps();
+
+            $table->index(['sender_id', 'receiver_id']);
         });
     }
 

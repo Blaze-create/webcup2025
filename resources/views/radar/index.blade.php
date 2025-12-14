@@ -116,7 +116,6 @@
 
           <div class="actions">
             <button type="button" id="btnScan">Scan Matches</button>
-            <button type="button" class="ghost" id="btnLoadDemo">Load Demo</button>
             <button type="button" class="ghost" id="btnClear">Clear Log</button>
           </div>
         </form>

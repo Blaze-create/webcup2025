@@ -29,7 +29,6 @@
           {{-- <!-- <div class="pill"><a href="{{ route('matches.page') }}">Open Matches →</a>
         </div> -->--}}
         <div class="pill"><a>Open Matches →</a></div>
-        <div class="pill"><a href="#" id="clear">Clear demo</a></div>
       </div>
     </div>
     </div>

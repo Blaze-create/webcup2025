@@ -514,7 +514,6 @@
     <aside class="panel">
       <div class="sideTop">
         <strong>Icebreakers</strong>
-        <span>One click inserts an opener.\n“AI” here is scripted (demo), not a backend model.</span>
       </div>
       <div class="sideBody">
         <div class="box">

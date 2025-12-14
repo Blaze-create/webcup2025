@@ -20,6 +20,11 @@ class AiMatchService
             $scoreData = $this->score($user, $candidate);
 
             $scored[] = [
+                'profile_id' => $candidate['id'] ?? null,         // Profile table id (DB)
+                'user_id'    => $candidate['user_id'] ?? null,    // Users table id (DB) - best for chat/match
+                // optionally:
+                'email'   => $candidate['email'] ?? null,
+                
                 'name' => $candidate['name'] ?? 'Unknown Entity',
                 'species' => $candidate['species'] ?? '???',
                 'intent' => $candidate['intent'] ?? '???',

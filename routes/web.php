@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RadarController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\MatchController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,7 +18,33 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+    //chat
+       // like action
+    Route::post('/like', [MatchController::class, 'like'])->name('like');
+
+    // fetch my matches
+    Route::get('/matches-data', [MatchController::class, 'myMatches'])->name('matches.data');
+
+    // chat messages
+    Route::get('/matches/{match}/messages', [ChatController::class, 'messages'])->name('chat.messages');
+    Route::post('/matches/{match}/messages', [ChatController::class, 'send'])->name('chat.send');
+
+    // pages (Blade views)
+    Route::view('/match', 'match.index')->name('match.page');
+    Route::view('/matches', 'matches.index')->name('matches.page');
+    Route::view('/chat/{match}', 'chat.index')->name('chat.page');
+
+    //new fixed
+    Route::get('/match/{id}', function ($id) {
+        return view('match.show', ['id' => $id]);
+    })->name('match.show');
+
+
+
 });
+
 
 // Route::post('/matches', [RadarController::class, 'matches'])->name('matches');
 
@@ -28,7 +55,7 @@ Route::middleware('web')->group(function () {
     Route::post('/radar/matches', [RadarController::class, 'matches'])->name('radar.matches');
 });
 
-Route::get('chats/chat',[RadarController::class,'matches'])->name('chat.matches');
+// Route::get('chats/chat',[RadarController::class,'matches'])->name('chat.matches');
 
 
 

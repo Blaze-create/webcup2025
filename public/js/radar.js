@@ -83,18 +83,69 @@ function tierToBadgeClass(tier) {
   return tier.toLowerCase();
 }
 
+// function renderMatches(results) {
+//   els.matchList.innerHTML = "";
+
+//   results.forEach((m, i) => {
+//     const card = document.createElement('div');
+//     card.className = 'card';
+
+//     const top = document.createElement('div');
+//     top.className = 'cardTop';
+
+//     const left = document.createElement('div');
+//     left.innerHTML = `<strong>${m.name}</strong><div class="meta">${m.species} • ${m.bioType} • Intent: ${m.intent}</div>`;
+
+//     const badge = document.createElement('div');
+//     badge.className = `badge ${tierToBadgeClass(m.tier)}`;
+//     badge.textContent = `${m.tier} • ${m.score}%`;
+
+//     top.appendChild(left);
+//     top.appendChild(badge);
+
+//     const p = document.createElement('p');
+//     p.textContent = m.summary;
+
+//     card.appendChild(top);
+//     card.appendChild(p);
+
+//     els.matchList.appendChild(card);
+
+ 
+//     const angle = (Math.PI * 2) * ((i + 1) / (results.length + 1));
+//     const dist = 60 + (1 - (m.score / 100)) * 160; // better score -> closer to center
+//     blips.push({ angle, dist, score: m.score, tier: m.tier, label: m.name });
+//   });
+// }
+
+//new fixed
 function renderMatches(results) {
   els.matchList.innerHTML = "";
+  blips = []; // important: reset blips before re-adding
 
   results.forEach((m, i) => {
     const card = document.createElement('div');
     card.className = 'card';
+    card.style.cursor = 'pointer';
+
+    // pick which id you want to open with:
+    const idToOpen = m.user_id ?? m.profile_id; // prefer user_id if available
+
+    card.addEventListener('click', () => {
+      if (!idToOpen) {
+        logLine("NO ID: This match has no DB id (likely seeded demo).", "bad");
+        return;
+      }
+      window.location.href = `/match/${idToOpen}`;
+    });
 
     const top = document.createElement('div');
     top.className = 'cardTop';
 
     const left = document.createElement('div');
-    left.innerHTML = `<strong>${m.name}</strong><div class="meta">${m.species} • ${m.bioType} • Intent: ${m.intent}</div>`;
+    left.innerHTML = `<strong>${m.name}</strong>
+      <div class="meta">${m.species} • ${m.bioType} • Intent: ${m.intent}</div>
+      <div class="meta tiny">ID: ${idToOpen ?? "N/A"}</div>`;
 
     const badge = document.createElement('div');
     badge.className = `badge ${tierToBadgeClass(m.tier)}`;
@@ -108,15 +159,15 @@ function renderMatches(results) {
 
     card.appendChild(top);
     card.appendChild(p);
-
     els.matchList.appendChild(card);
 
-    // Create blips for radar
+    // radar blips
     const angle = (Math.PI * 2) * ((i + 1) / (results.length + 1));
-    const dist = 60 + (1 - (m.score / 100)) * 160; // better score -> closer to center
+    const dist = 60 + (1 - (m.score / 100)) * 160;
     blips.push({ angle, dist, score: m.score, tier: m.tier, label: m.name });
   });
 }
+
 
 function drawRadar() {
   const c = els.canvas;

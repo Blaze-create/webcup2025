@@ -54,6 +54,12 @@ Route::view('/matches', 'match.matches')->name('matches.page');
 //for liking
 Route::middleware(['auth'])->post('/like', [MatchController::class, 'like'])->name('like');
 
+//fetching all liking of one user
+Route::middleware('auth')->get(
+    '/match/likes-count',
+    [RadarController::class, 'likesCount']
+)->name('match.likes.count');
+
 
 // Route::post('/matches', [RadarController::class, 'matches'])->name('matches');
 

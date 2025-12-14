@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Profile;
 use App\Services\AiMatchService;
 
+use App\Models\Like;
+
 class RadarController extends Controller
 {
     public function index()
@@ -29,27 +31,53 @@ class RadarController extends Controller
             'risk' => 'required|integer|min:0|max:100',
         ]);
 
-        // Optional: if logged in, save/update the user's profile
-        if (Auth::check()) {
-            Profile::updateOrCreate(
-                ['user_id' => Auth::id()],
-                array_merge($data, ['user_id' => Auth::id()])
-            );
+        // Save/update my profile
+            if (Auth::check()) {
+                Profile::updateOrCreate(
+                    ['user_id' => Auth::id()],
+                    array_merge($data, ['user_id' => Auth::id()])
+                );
+            }
+
+            $candidatesQuery = Profile::query()->limit(50);
+
+            if (Auth::check()) {
+                $me = Auth::id();
+
+                // all users I already liked
+                $likedIds = Like::where('liker_id', $me)->pluck('liked_id');
+
+                $candidatesQuery
+                    ->where('user_id', '!=', $me)                  // not me
+                    ->whereNotIn('user_id', $likedIds);            // not already liked
+            }
+
+            $candidates = $candidatesQuery->get()->all();
+
+            $results = $ai->rankMatches($data, $candidates);
+
+            return response()->json([
+                'ok' => true,
+                'count' => count($results),
+                'results' => $results,
+            ]);
+    }
+
+
+    public function likesCount()
+    {
+        if (!Auth::check()) {
+            return response()->json([
+                'ok' => false,
+                'count' => 0,
+            ]);
         }
 
-        // Fetch candidates from DB (other users), fallback to seeded demo if none
-        $candidates = Profile::query()
-            ->when(Auth::check(), fn($q) => $q->where('user_id', '!=', Auth::id()))
-            ->limit(50)
-            ->get()
-            ->all();
-
-        $results = $ai->rankMatches($data, $candidates);
+        $count = Like::where('liker_id', Auth::id())->count();
 
         return response()->json([
             'ok' => true,
-            'count' => count($results),
-            'results' => $results,
+            'count' => $count,
         ]);
     }
 

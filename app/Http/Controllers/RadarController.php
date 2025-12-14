@@ -89,7 +89,7 @@ class RadarController extends Controller
         return response()->json([
             'ok' => true,
             'count' => $count,
-        ]);
+        ]);     
     }
 
     public function mutualLikes()

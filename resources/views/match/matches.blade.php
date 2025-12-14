@@ -21,7 +21,7 @@
           <h1><img src="{{ asset('img/logo.png') }}" width="200" alt=""></h1>
           <p>Matches • Secure channels unlocked</p>
         </div>
-        <a class="link" href="match.html">← Back to Deck</a>
+        <a class="link" href="{{route('home')}}">← Back to Deck</a>
       </div>
     </div>
   </header>

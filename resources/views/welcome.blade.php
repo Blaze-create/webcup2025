@@ -962,7 +962,7 @@ window.addEventListener('load', hideSpinner);
 
                 <div class="cta">
                     @auth
-                    <a class="btn btn-ghost" id="btnDemo" href="{{ route('radar.index') }}">Find Match</a>
+                    <a class="btn btn-ghost" id="btnDemo" href="{{ route('match.page') }}">Find Match</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
 

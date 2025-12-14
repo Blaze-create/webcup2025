@@ -1,6 +1,6 @@
 (() => {
   /* ============================
-     DOM HELPERS
+     DOM
   ============================ */
   const $ = (s) => document.querySelector(s);
 
@@ -20,15 +20,6 @@
   const csrf = document.querySelector('meta[name="csrf-token"]')?.content;
 
   /* ============================
-     STORAGE KEYS
-  ============================ */
-  const STORE = {
-    likes: "dp_likes_v2",
-    matches: "dp_matches_v2",
-    chats: "dp_chats_v2"
-  };
-
-  /* ============================
      STATE
   ============================ */
   let deck = [];
@@ -39,24 +30,13 @@
   ============================ */
   const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
 
-  function load(key, fallback) {
-    try {
-      const raw = localStorage.getItem(key);
-      return raw ? JSON.parse(raw) : fallback;
-    } catch {
-      return fallback;
-    }
-  }
-
-  function save(key, val) {
-    localStorage.setItem(key, JSON.stringify(val));
-  }
-
+  let toastT = null;
   function pop(msg) {
     if (!toast) return;
     toast.textContent = msg;
     toast.classList.add("on");
-    setTimeout(() => toast.classList.remove("on"), 1200);
+    clearTimeout(toastT);
+    toastT = setTimeout(() => toast.classList.remove("on"), 1200);
   }
 
   function escapeHtml(str) {
@@ -66,43 +46,58 @@
   }
 
   /* ============================
-     LIKES / MATCHES
+     COUNTERS (DB)
   ============================ */
-  function getLikes() { return load(STORE.likes, []); }
-  function setLikes(v) { save(STORE.likes, v); }
+  let likesCount = 0; // only for UI feedback this session
 
-  function getMatches() { return load(STORE.matches, []); }
-  function setMatches(v) { save(STORE.matches, v); }
+  async function refreshMatchesCount() {
+    // Uses your MatchController@myMatches (GET /matches-data)
+    try {
+      const res = await fetch('/matches-data', { headers: { 'Accept': 'application/json' } });
+      const data = await res.json();
+      if (data?.ok && Array.isArray(data.matches)) {
+        matchesEl.textContent = String(data.matches.length);
+      }
+    } catch {
+      // ignore
+    }
+  }
 
-  function updateTopBar() {
-    likesEl.textContent = getLikes().length;
-    matchesEl.textContent = getMatches().length;
+  async function refreshLikesCount() {
+    try {
+      const res = await fetch('/match/likes-count', { headers: { 'Accept': 'application/json' } });
+      const data = await res.json();
+      if (data?.ok) {
+        likesEl.textContent = String(data.count ?? 0);
+      }
+    } catch {
+      // ignore
+    }
+  }
+
+  function updateLikesUi() {
+    likesEl.textContent = String(likesCount);
   }
 
   /* ============================
-     MATCH CREATION (REAL)
+     API: LIKE (DB)
   ============================ */
-  function createMatch(profile) {
-    const matches = getMatches();
-    if (matches.some(m => m.profileId === profile.id)) return;
+  async function sendLikeToDb(likedUserId) {
+    const res = await fetch('/like', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        ...(csrf ? { 'X-CSRF-TOKEN': csrf } : {}),
+      },
+      body: JSON.stringify({ liked_id: likedUserId }),
+    });
 
-    const match = {
-      id: profile.match_id ?? crypto.randomUUID(),
-      profileId: profile.id,
-      name: profile.name,
-      createdAt: Date.now()
-    };
-
-    matches.unshift(match);
-    setMatches(matches);
-
-    pop("It’s a Match!");
-    analystEl.textContent = `MATCH CONFIRMED ✅\n${profile.name} is now in your Matches list.`;
-    updateTopBar();
+    return res.json();
   }
 
   /* ============================
-     DECK RENDERING
+     DECK RENDER
   ============================ */
   function render() {
     stack.innerHTML = "";
@@ -149,36 +144,84 @@
       if (depth === 0) attachDrag(card, p);
       stack.appendChild(card);
     });
-
-    updateTopBar();
   }
 
-  /* ============================
-     SWIPE HANDLING
-  ============================ */
   function next() {
     index++;
     render();
   }
 
-  function commit(profile, action) {
-    if (action === "LIKE" || action === "SUPER") {
-      const likes = getLikes();
-      likes.unshift({ profileId: profile.id, when: Date.now(), kind: action });
-      setLikes(likes);
-
-      if (profile.mutual === true) {
-        createMatch(profile);
-      } else {
-        analystEl.textContent = `Signal sent to ${profile.name}. Awaiting response…`;
-      }
-    } else {
-      analystEl.textContent = `PASS ▸ ${profile.name}`;
-    }
-    updateTopBar();
-    next();
+  function topProfile() {
+    return deck[index] || null;
   }
 
+  /* ============================
+     ACTIONS (PASS / LIKE / SUPER)
+  ============================ */
+  async function commit(profile, action) {
+    if (!profile) return;
+
+    if (action === "PASS") {
+      analystEl.textContent = `PASS ▸ ${profile.name}`;
+      pop("Passed.");
+      next();
+      return;
+    }
+
+    // LIKE/SUPER => must have real user id
+    if (!profile.user_id) {
+      pop("Missing user_id in candidate data.");
+      analystEl.textContent = "Backend must return user_id for candidates.";
+      return;
+    }
+
+    // UI feedback
+     likesEl.textContent = String((Number(likesEl.textContent) || 0) + 1);
+
+    // Button glow feedback
+    if (action === "LIKE" && btnLike) btnLike.classList.add("liked");
+    if (action === "SUPER" && btnSuper) btnSuper.classList.add("liked");
+
+    try {
+      const data = await sendLikeToDb(profile.user_id);
+
+      if (!data?.ok) {
+        pop(data?.message || "Like failed.");
+        analystEl.textContent = "LIKE failed. Check auth/route/CSRF.";
+      } else {
+        pop(action === "SUPER" ? "Super Like sent." : "Liked.");
+
+        if (data.matched) {
+          pop("It’s a Match!");
+          analystEl.textContent =
+`MATCH CONFIRMED ✅
+${profile.name} is now in your Matches list.`;
+
+          // Update matches counter from DB
+          await refreshMatchesCount();
+
+          // Optional: auto redirect to chat
+          // window.location.href = `/chat/${data.match_id}`;
+        } else {
+          analystEl.textContent = `Signal sent to ${profile.name}. Awaiting response…`;
+        }
+
+        // move on
+        next();
+      }
+
+    } catch {
+      pop("Network error.");
+      analystEl.textContent = "Network error sending like.";
+    } finally {
+      if (btnLike) btnLike.classList.remove("liked");
+      if (btnSuper) btnSuper.classList.remove("liked");
+    }
+  }
+
+  /* ============================
+     DRAG SWIPE
+  ============================ */
   function attachDrag(card, profile) {
     let startX = 0, curX = 0, dragging = false;
     const threshold = 120;
@@ -186,6 +229,7 @@
     card.addEventListener("pointerdown", (e) => {
       dragging = true;
       startX = e.clientX;
+      curX = 0;
       card.setPointerCapture(e.pointerId);
       card.style.transition = "none";
     });
@@ -204,19 +248,32 @@
       else if (curX < -threshold) commit(profile, "PASS");
       else card.style.transform = "";
     });
+
+    card.addEventListener("pointercancel", () => {
+      dragging = false;
+      card.style.transition = "transform .25s ease";
+      card.style.transform = "";
+    });
   }
 
   /* ============================
-     FETCH REAL MATCHES
+     FETCH REAL CANDIDATES (Radar)
   ============================ */
   async function fetchMatches() {
     const raw = localStorage.getItem("dp_operator_profile");
     if (!raw) {
-      analystEl.textContent = "No scan profile found. Go back to Radar.";
+      analystEl.textContent = "No scan profile found. Go back to Radar and press Scan.";
+      pop("No scan profile found.");
       return;
     }
 
-    const profile = JSON.parse(raw);
+    let profile;
+    try { profile = JSON.parse(raw); }
+    catch {
+      analystEl.textContent = "Scan profile corrupted. Re-scan from Radar.";
+      pop("Bad scan profile.");
+      return;
+    }
 
     analystEl.textContent = "Scanning database for compatible signals…";
 
@@ -228,26 +285,32 @@
         ...(csrf ? { "X-CSRF-TOKEN": csrf } : {})
       },
       body: JSON.stringify(profile)
-    });
+    }).catch(() => null);
 
-    const data = await res.json();
-
-    if (!data || data.ok !== true) {
-      analystEl.textContent = "AI CORE ERROR. Try again.";
+    if (!res) {
+      analystEl.textContent = "NETWORK FAILURE: could not reach /radar/matches";
+      pop("Network failure.");
       return;
     }
 
-    deck = data.results.map(r => ({
-      id: r.id,
-      name: r.name,
-      species: r.species,
-      intent: r.intent,
-      comms: r.comms,
-      compat: clamp(r.score ?? 70, 0, 100),
-      risk: clamp(r.risk ?? 50, 0, 100),
-      note: r.note ?? "Signal acquired from database.",
-      mutual: r.mutual ?? false,
-      match_id: r.match_id ?? null
+    const data = await res.json().catch(() => null);
+
+    if (!data || data.ok !== true) {
+      analystEl.textContent = "AI CORE ERROR. Try again.";
+      pop("AI Core error.");
+      return;
+    }
+
+    // IMPORTANT: backend must provide user_id (users.id) for likes to work
+    deck = (data.results || []).map((r, idx) => ({
+      user_id: r.user_id ?? r.id, // <-- prefer r.user_id. If backend sends user id in r.id, this still works.
+      name: r.name || `Candidate #${idx + 1}`,
+      species: r.species || "Unknown",
+      intent: r.intent || r.primary_intent || "Unknown",
+      comms: r.comms || r.communication_method || "Unknown",
+      compat: clamp(Number(r.score ?? r.compat ?? 70), 0, 100),
+      risk: clamp(Number(r.risk ?? r.risk_tolerance ?? 50), 0, 100),
+      note: r.note || r.bio || "Signal acquired from database."
     }));
 
     index = 0;
@@ -259,37 +322,35 @@
   /* ============================
      BUTTONS
   ============================ */
-  btnPass?.addEventListener("click", () => {
-    const p = deck[index];
-    if (p) commit(p, "PASS");
-  });
-
-  btnLike?.addEventListener("click", () => {
-    const p = deck[index];
-    if (p) commit(p, "LIKE");
-  });
-
-  btnSuper?.addEventListener("click", () => {
-    const p = deck[index];
-    if (p) commit(p, "SUPER");
-  });
+  btnPass?.addEventListener("click", () => commit(topProfile(), "PASS"));
+  btnLike?.addEventListener("click", () => commit(topProfile(), "LIKE"));
+  btnSuper?.addEventListener("click", () => commit(topProfile(), "SUPER"));
 
   btnScan?.addEventListener("click", fetchMatches);
   btnGoMatches?.addEventListener("click", () => location.href = "/matches");
 
+  // "Clear demo" no longer clears DB. We'll just clear local scan profile + UI counters.
   btnClear?.addEventListener("click", (e) => {
     e.preventDefault();
-    localStorage.removeItem(STORE.likes);
-    localStorage.removeItem(STORE.matches);
-    localStorage.removeItem(STORE.chats);
-    pop("Local data cleared.");
-    updateTopBar();
+    likesCount = 0;
+    updateLikesUi();
+    pop("Cleared local UI counters.");
+    analystEl.textContent = "Cleared local counters. DB likes/matches remain saved.";
   });
 
   /* ============================
      BOOT
   ============================ */
-  updateTopBar();
-  fetchMatches();
+  (async function boot() {
+    likesCount = 0;
+    updateLikesUi();
+
+    // matches count from DB
+    matchesEl.textContent = "0";
+    await refreshMatchesCount();
+
+    // load deck from DB-matching endpoint
+    await fetchMatches();
+  })();
 
 })();

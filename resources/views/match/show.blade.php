@@ -461,7 +461,7 @@
           <h1>IAstroMatch</h1>
           <p>Secure Channel • Private match chat</p>
         </div>
-        <a class="link" href="matches.html">← Back to Matches</a>
+        <a class="link" href="{{ route('matches.page') }}">← Back to Matches</a>
       </div>
     </div>
   </header>

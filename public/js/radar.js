@@ -285,7 +285,11 @@ function init() {
     logLine("DEMO PROFILE LOADED.", "muted");
   });
 
-  els.btnScan.addEventListener('click', () => scan());
+  // els.btnScan.addEventListener('click', () => scan());
+  els.btnScan.addEventListener('click', () => {
+    window.location.href = '/match';
+  });
+
 
   logLine("SYSTEM READY. Awaiting operator scan command.", "muted");
   if (!animId) drawRadar();

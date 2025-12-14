@@ -20,21 +20,24 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
+
+
+
     //chat
        // like action
-    Route::post('/like', [MatchController::class, 'like'])->name('like');
+    // Route::post('/like', [MatchController::class, 'like'])->name('like');
 
     // fetch my matches
-    Route::get('/matches-data', [MatchController::class, 'myMatches'])->name('matches.data');
+    // Route::get('/matches-data', [MatchController::class, 'myMatches'])->name('matches.data');
 
     // chat messages
-    Route::get('/matches/{match}/messages', [ChatController::class, 'messages'])->name('chat.messages');
-    Route::post('/matches/{match}/messages', [ChatController::class, 'send'])->name('chat.send');
+    // Route::get('/matches/{match}/messages', [ChatController::class, 'messages'])->name('chat.messages');
+    // Route::post('/matches/{match}/messages', [ChatController::class, 'send'])->name('chat.send');
 
     // pages (Blade views)
-    Route::view('/match', 'match.index')->name('match.page');
-    Route::view('/matches', 'matches.index')->name('matches.page');
-    Route::view('/chat/{match}', 'chat.index')->name('chat.page');
+    // Route::view('/match', 'match.index')->name('match.page');
+    // Route::view('/matches', 'matches.index')->name('matches.page');
+    // Route::view('/chat/{match}', 'chat.index')->name('chat.page');
 
     //new fixed
     Route::get('/match/{id}', function ($id) {
@@ -44,6 +47,8 @@ Route::middleware('auth')->group(function () {
 
 
 });
+
+Route::view('/match', 'match.match')->name('match.page');
 
 
 // Route::post('/matches', [RadarController::class, 'matches'])->name('matches');

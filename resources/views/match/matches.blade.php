@@ -37,17 +37,23 @@
 
 
 
- @foreach ($matches as $user)
-        <div class="match">
-            <div>
-              <strong>{{ $user->name }}</strong>
-              <small>
-                Alliance • 87% compat • risk 55/100 • comms Radio
-              </small>
-            </div>
-            <button class="btn" data-id="5">Open Chat</button>
-          </div>
-      @endforeach
+  @forelse ($matches as $user)
+    <div class="match">
+      <div>
+        <strong>{{ $user->name }}</strong>
+        <small>
+          Alliance • 87% compat • risk 55/100 • comms Radio
+        </small>
+      </div>
+      <button class="btn" data-id="{{ $user->id }}">Open Chat</button>
+    </div>
+  @empty
+    <div class="match empty">
+      <p>No matches yet.</p>
+      <small>Keep scanning — the stars will align ✨</small>
+    </div>
+  @endforelse
+
 
         </div>
       </section>

@@ -8,7 +8,7 @@ use App\Http\Controllers\MatchController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -57,6 +57,7 @@ Route::middleware('web')->group(function () {
 
 // Route::get('chats/chat',[RadarController::class,'matches'])->name('chat.matches');
 
-
+Route::get('/chat/{name}',[ChatController::class,'findchat'])->name('find.chat');
+Route::post('/chat/{name}/send',[ChatController::class,'send'])->name('chat.send');
 
 require __DIR__.'/auth.php';

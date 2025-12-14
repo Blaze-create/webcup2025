@@ -108,6 +108,29 @@ class RadarController extends Controller
 
         $matches = User::whereIn('id', $matchedIds)->get();
 
+        // ✅ how many likes the current user received (not necessarily mutual)
+
         return view('match.matches', compact('matches'));
+    }
+    public function likepage()
+    {
+        $me = Auth::id();
+
+        // ✅ IDs of users who mutually like each other
+        $matchedIds = Like::query()
+            ->from('likes as l1')
+            ->join('likes as l2', function ($join) {
+                $join->on('l1.liked_id', '=', 'l2.liker_id')
+                    ->on('l1.liker_id', '=', 'l2.liked_id');
+            })
+            ->where('l1.liker_id', $me)
+            ->distinct()
+            ->pluck('l1.liked_id');
+
+        // ✅ Full user records for matches
+        $matches = User::whereIn('id', $matchedIds)->get();
+        $likesCount = Like::where('liked_id', $me)->count();
+        $matchesCount = $matchedIds->count();
+        return view('match.match', compact('likesCount', 'matchesCount'));
     }
 }

@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function () {
 
 
     //chat
-       // like action
+    // like action
     // Route::post('/like', [MatchController::class, 'like'])->name('like');
 
     // fetch my matches
@@ -43,14 +43,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/match/{id}', function ($id) {
         return view('match.show', ['id' => $id]);
     })->name('match.show');
-
-
-
 });
 
-Route::view('/match', 'match.match')->name('match.page');
+Route::get('/match', [RadarController::class, 'likepage'])->name('match.page');
 
-Route::get('/matches',[RadarController::class,'mutualLikes'])->name('matches.page');
+Route::get('/matches', [RadarController::class, 'mutualLikes'])->name('matches.page');
 
 //for liking
 Route::middleware(['auth'])->post('/like', [MatchController::class, 'like'])->name('like');
@@ -73,7 +70,7 @@ Route::middleware('web')->group(function () {
 
 // Route::get('chats/chat',[RadarController::class,'matches'])->name('chat.matches');
 
-Route::get('/chat/{name}',[ChatController::class,'findchat'])->name('find.chat');
-Route::post('/chat/{name}/send',[ChatController::class,'send'])->name('chat.send');
+Route::get('/chat/{name}', [ChatController::class, 'findchat'])->name('find.chat');
+Route::post('/chat/{name}/send', [ChatController::class, 'send'])->name('chat.send');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

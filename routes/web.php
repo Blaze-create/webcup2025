@@ -81,11 +81,13 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/matches/requests/{id}/accept', [MatchesController::class, 'accept'])->name('matches.accept');
     Route::post('/matches/requests/{id}/decline', [MatchesController::class, 'decline'])->name('matches.decline');
+
+    Route::get('/chat/{user}', [ChatController::class, 'show'])->name('chat.show');
+    Route::post('/chat/{user}', [ChatController::class, 'send'])->name('chat.send');
 });
 
 // Route::get('chats/chat',[RadarController::class,'matches'])->name('chat.matches');
 
-Route::get('/chat/{name}', [ChatController::class, 'findchat'])->name('find.chat');
-Route::post('/chat/{name}/send', [ChatController::class, 'send'])->name('chat.send');
+
 
 require __DIR__ . '/auth.php';

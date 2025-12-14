@@ -17,7 +17,7 @@
     <header class="topbar">
       <div>
         <h1>IAstroMatch</h1>
-        <p class="sub">Dieselpunk Command Radar • Compatibility Scan</p>
+        <p class="sub">Create your profile!</p>
       </div>
       <div class="status">
         <span class="dot"></span>

@@ -17,7 +17,7 @@
         <div class="brand">
           <div class="badge"></div>
           <div>
-            <h1><img src="{{ asset('img/logo.png') }}" width="200" alt=""></h1>
+            <h1><a href="{{ route('home') }}"><img src="{{ asset('img/logo.png') }}" width="200" alt=""></a></h1>
             <p>Swipe Console • Like → Match → Chat</p>
           </div>
         </div>
@@ -29,7 +29,6 @@
           {{-- <!-- <div class="pill"><a href="{{ route('matches.page') }}">Open Matches →</a>
         </div> -->--}}
         <div class="pill"><a>Open Matches →</a></div>
-        <div class="pill"><a href="#" id="clear">Clear demo</a></div>
       </div>
     </div>
     </div>

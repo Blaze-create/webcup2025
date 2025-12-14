@@ -16,7 +16,7 @@
   <div class="wrap">
     <header class="topbar">
       <div>
-       <h1><img src="{{ asset('img/logo.png') }}" width="200" alt=""></h1>
+       <h1><a href="{{ route('home') }}"><img src="{{ asset('img/logo.png') }}" width="200" alt=""></a></h1>
         <p class="sub">Create your profile!</p>
       </div>
       <div class="status">
@@ -116,7 +116,6 @@
 
           <div class="actions">
             <button type="button" id="btnScan">Scan Matches</button>
-            <button type="button" class="ghost" id="btnLoadDemo">Load Demo</button>
             <button type="button" class="ghost" id="btnClear">Clear Log</button>
           </div>
         </form>

@@ -461,7 +461,7 @@
           <h1>IAstroMatch</h1>
           <p>Secure Channel • Private match chat</p>
         </div>
-        <a class="link" href="matches.html">← Back to Matches</a>
+        <a class="link" href="{{ route('matches.page') }}">← Back to Matches</a>
       </div>
     </div>
   </header>
@@ -514,7 +514,6 @@
     <aside class="panel">
       <div class="sideTop">
         <strong>Icebreakers</strong>
-        <span>One click inserts an opener.\n“AI” here is scripted (demo), not a backend model.</span>
       </div>
       <div class="sideBody">
         <div class="box">

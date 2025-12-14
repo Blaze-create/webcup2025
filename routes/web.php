@@ -21,12 +21,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
-Route::get('/me', function () {
-    return response()->json([
-        'user' => Auth::user()?->load('profile'),
-    ]);
-})->middleware('auth');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -76,16 +70,14 @@ Route::middleware('auth')->get(
 
 // Route::get('/radar', [RadarController::class, 'index'])->name('radar.index');
 
-Route::middleware('web')->group(function () {
-    Route::get('/radar', [RadarController::class, 'index'])->name('radar.index');
-    Route::post('/radar/matches', [RadarController::class, 'matches'])->name('radar.matches');
-});
+Route::middleware('web')->group(function () {});
 
 
 
 //MatchsController to text
 Route::middleware('auth')->group(function () {
-
+    Route::get('/radar', [RadarController::class, 'index'])->name('radar.index');
+    Route::post('/radar/matches', [RadarController::class, 'matches'])->name('radar.matches');
 
     Route::get('/matches/data', [MatchesController::class, 'data'])->name('matches.data');
     Route::get('/matches/notifications', [MatchesController::class, 'notifications'])->name('matches.notifications');

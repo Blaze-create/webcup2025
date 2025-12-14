@@ -18,7 +18,7 @@
     <div class="wrap">
       <div class="nav">
         <div class="brand">
-          <h1><img src="{{ asset('img/logo.png') }}" width="200" alt=""></h1>
+          <h1><a href="{{ route('home') }}"><img src="{{ asset('img/logo.png') }}" width="200" alt=""></a></h1>
           <p>Matches • Secure channels unlocked</p>
         </div>
         <a class="link" href="{{route('home')}}">← Back to Deck</a>

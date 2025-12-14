@@ -446,7 +446,7 @@
         <div class="brand">
           <div class="badge" aria-hidden="true"></div>
           <div>
-            <h1><img src="{{ asset('img/logo.png') }}" width="200" alt=""></h1>
+            <h1><a href="{{ route('home') }}"><img src="{{ asset('img/logo.png') }}" width="200" alt=""></a></h1>
             <p>Login • Station Access Request</p>
           </div>
         </div>
@@ -489,7 +489,7 @@
 
         <div class="actions">
           <button class="btn" id="btnCreate" type="submit">Login</button>
-          <button class="btn ghost" type="reset">Reset</button>
+          <a class="btn ghost"href="{{ route('register') }}">dont have an account</a>
         </div>
 
         <div class="hint" id="finalHint"></div>

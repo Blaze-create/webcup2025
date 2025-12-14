@@ -907,6 +907,445 @@
                 content: '...';
             }
         }
+    
+
+
+
+        /* ---- Services ---- */
+        .sectionHead { margin-bottom: 14px; }
+        .sectionHead h2 {
+            margin: 0 0 6px;
+            font-size: 18px;
+            letter-spacing: .6px;
+            text-transform: uppercase;
+        }
+        .sectionHead p { margin: 0; color: rgba(242,242,242,.78); max-width: 80ch; }
+
+        .servicesGrid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 16px;
+        }
+        @media (max-width: 980px) {
+            .servicesGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        @media (max-width: 620px) {
+            .servicesGrid { grid-template-columns: 1fr; }
+        }
+
+        .svcCard {
+            position: relative;
+            border: 1px solid rgba(191, 154, 84, .20);
+            background: linear-gradient(180deg, rgba(242, 242, 242, .08), rgba(242, 242, 242, .04));
+            border-radius: var(--radius);
+            padding: 16px 16px 14px;
+            box-shadow: 0 18px 40px var(--shadow);
+            overflow: hidden;
+            min-height: 180px;
+        }
+        .svcCard::before {
+            content: "";
+            position: absolute;
+            inset: -1px;
+            background: radial-gradient(320px 220px at var(--mx, 50%) var(--my, 30%), rgba(191, 154, 84, .22), transparent 60%);
+            opacity: .9;
+            pointer-events: none;
+        }
+        .svcIcon {
+            width: 44px;
+            height: 44px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            font-family: var(--mono);
+            font-size: 18px;
+            color: rgba(242,242,242,.95);
+            background:
+                radial-gradient(circle at 35% 30%, rgba(242, 242, 242, .18), transparent 55%),
+                linear-gradient(145deg, rgba(191, 154, 84, .55), rgba(140, 93, 35, .35));
+            border: 1px solid rgba(191, 154, 84, .22);
+            box-shadow: inset 0 1px 0 rgba(242,242,242,.18);
+            margin-bottom: 10px;
+        }
+        .svcCard h4 { margin: 0 0 6px; font-size: 16px; letter-spacing: .4px; }
+        .svcCard p { margin: 0 0 10px; color: rgba(242,242,242,.78); line-height: 1.4; }
+
+        .statsRow {
+            margin-top: 16px;
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+        }
+        @media (max-width: 820px) { .statsRow { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        .stat {
+            border: 1px solid rgba(191, 154, 84, .18);
+            background: rgba(242, 242, 242, .05);
+            border-radius: var(--radius2);
+            padding: 14px;
+            box-shadow: 0 16px 30px rgba(0,0,0,.25);
+        }
+        .stat .num {
+            font-family: var(--mono);
+            font-size: 22px;
+            letter-spacing: .6px;
+            color: rgba(242,242,242,.95);
+        }
+        .stat .label {
+            margin-top: 4px;
+            font-size: 12px;
+            color: rgba(242,242,242,.70);
+            text-transform: uppercase;
+            letter-spacing: .6px;
+        }
+
+        /* ---- Recon Images (secondary image wall) ---- */
+        .reconShell{
+            display:grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 18px;
+            align-items: stretch;
+        }
+        @media (max-width: 980px){ .reconShell{ grid-template-columns: 1fr; } }
+
+        .reconText{
+            border: 1px solid rgba(191,154,84,.18);
+            background: rgba(242,242,242,.05);
+            border-radius: var(--radius);
+            padding: 18px;
+            box-shadow: 0 18px 40px rgba(0,0,0,.28);
+        }
+        .reconText h2{
+            margin:0 0 8px;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+        }
+        .reconText p{ margin:0; color: rgba(242,242,242,.78); max-width: 70ch; line-height: 1.5; }
+        .reconChips{ margin-top: 12px; display:flex; gap:10px; flex-wrap:wrap; }
+
+        .reconPhotos{
+            position: relative;
+            min-height: 340px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(191,154,84,.18);
+            background:
+                radial-gradient(520px 340px at 30% 20%, rgba(191,154,84,.18), transparent 60%),
+                radial-gradient(520px 340px at 80% 70%, rgba(140,93,35,.16), transparent 65%),
+                rgba(242,242,242,.03);
+            box-shadow: 0 20px 50px rgba(0,0,0,.32);
+            overflow: hidden;
+        }
+
+        .photoCard{
+            position:absolute;
+            width: 56%;
+            max-width: 360px;
+            border-radius: 18px;
+            overflow:hidden;
+            border: 1px solid rgba(191,154,84,.22);
+            background: rgba(0,0,0,.25);
+            box-shadow: 0 24px 60px rgba(0,0,0,.45);
+            transform: translate3d(0,0,0);
+            will-change: transform;
+        }
+        .photoCard img{ width:100%; height: 220px; object-fit: cover; display:block; filter: saturate(1.05) contrast(1.05); }
+        .photoCard figcaption{
+            padding: 10px 12px;
+            font-size: 12px;
+            font-family: var(--mono);
+            color: rgba(242,242,242,.85);
+            background: linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.28));
+        }
+        .pc1{ left: 8%; top: 14%; transform: rotate(-3deg); }
+        .pc2{ right: 6%; top: 10%; transform: rotate(3deg); }
+        .pc3{ left: 20%; bottom: 8%; transform: rotate(1deg); }
+
+        @media (max-width: 980px){
+            .reconPhotos{ min-height: 420px; }
+            .photoCard{ width: 70%; max-width: 420px; }
+            .pc1{ left: 6%; top: 10%; }
+            .pc2{ right: 6%; top: 36%; }
+            .pc3{ left: 10%; bottom: 6%; }
+        }
+
+        .photoCard::after{
+            content:"";
+            position:absolute;
+            inset:-40%;
+            background: conic-gradient(from 180deg, transparent 0 35%, rgba(242,242,242,.12) 45%, transparent 55% 100%);
+            opacity:.55;
+            transform: rotate(0deg);
+            animation: reconSheen 5.2s var(--ease) infinite;
+            pointer-events:none;
+        }
+        @keyframes reconSheen{
+            0%{ transform: rotate(0deg); }
+            100%{ transform: rotate(360deg); }
+        }
+
+        .photoCard:hover{
+            transform: translateY(-6px) scale(1.01);
+            transition: transform .25s var(--ease);
+        }
+
+        .floatA{ animation: floatA 6.6s var(--ease) infinite; }
+        .floatB{ animation: floatB 7.4s var(--ease) infinite; }
+        .floatC{ animation: floatC 8.2s var(--ease) infinite; }
+        @keyframes floatA{ 0%,100%{ transform: translateY(0) rotate(-3deg); } 50%{ transform: translateY(-10px) rotate(-2deg); } }
+        @keyframes floatB{ 0%,100%{ transform: translateY(0) rotate(3deg); } 50%{ transform: translateY(-12px) rotate(2deg); } }
+        @keyframes floatC{ 0%,100%{ transform: translateY(0) rotate(1deg); } 50%{ transform: translateY(-9px) rotate(0deg); } }
+
+
+        /* ---- Image Gallery / Evidence Wall ---- */
+        .gallerySection {
+            position: relative;
+            padding: 10px 0 38px;
+        }
+
+        .galleryHead {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .galleryHead h3 {
+            margin: 0;
+            font-size: 14px;
+            letter-spacing: .7px;
+            text-transform: uppercase;
+            color: rgba(242, 242, 242, .88);
+        }
+
+        .galleryHead p {
+            margin: 0;
+            max-width: 62ch;
+            font-size: 12.5px;
+            line-height: 1.6;
+            color: rgba(242, 242, 242, .72);
+            font-family: var(--mono);
+        }
+
+        .galleryShell {
+            border-radius: var(--radius);
+            background: linear-gradient(180deg, rgba(242, 242, 242, .06), rgba(242, 242, 242, .03));
+            border: 1px solid rgba(191, 154, 84, .22);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, .35);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .galleryGrid {
+            display: grid;
+            grid-template-columns: 1.15fr .85fr;
+            gap: 0;
+            min-height: 380px;
+        }
+
+        @media (max-width: 980px) {
+            .galleryGrid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .galMain {
+            position: relative;
+            padding: 14px;
+            border-right: 1px solid rgba(191, 154, 84, .14);
+        }
+
+        @media (max-width: 980px) {
+            .galMain {
+                border-right: 0;
+                border-bottom: 1px solid rgba(191, 154, 84, .14);
+            }
+        }
+
+        .galFrame {
+            position: relative;
+            height: 100%;
+            min-height: 340px;
+            border-radius: var(--radius2);
+            overflow: hidden;
+            border: 1px solid rgba(191, 154, 84, .18);
+            background: rgba(0,0,0,.18);
+            box-shadow: inset 0 0 0 1px rgba(242, 242, 242, .05);
+        }
+
+        .galFrame::before {
+            content: "";
+            position: absolute;
+            inset: -40%;
+            background: radial-gradient(circle at var(--mx, 50%) var(--my, 45%),
+                    rgba(191, 154, 84, .22), transparent 55%);
+            opacity: .6;
+            pointer-events: none;
+            transform: translateZ(0);
+        }
+
+        .galSlide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transform: scale(1.03);
+            transition: opacity .6s var(--ease), transform .8s var(--ease);
+            will-change: opacity, transform;
+        }
+
+        .galSlide.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .galSlide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: saturate(1.05) contrast(1.05);
+        }
+
+        .galCaption {
+            position: absolute;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 10px;
+            border-radius: 16px;
+            background: linear-gradient(180deg, rgba(64, 42, 16, .55), rgba(64, 42, 16, .25));
+            border: 1px solid rgba(191, 154, 84, .22);
+            backdrop-filter: blur(10px);
+        }
+
+        .galCaption strong {
+            display: block;
+            font-size: 12px;
+            letter-spacing: .65px;
+            text-transform: uppercase;
+        }
+
+        .galCaption span {
+            display: block;
+            margin-top: 3px;
+            font-family: var(--mono);
+            font-size: 11px;
+            color: rgba(242, 242, 242, .72);
+        }
+
+        .galControls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .galDots {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .galDot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            border: 1px solid rgba(191, 154, 84, .40);
+            background: rgba(242, 242, 242, .06);
+            opacity: .8;
+            cursor: pointer;
+            transition: transform .2s var(--ease), background .2s var(--ease), opacity .2s var(--ease);
+        }
+
+        .galDot.active {
+            background: rgba(191, 154, 84, .75);
+            opacity: 1;
+            transform: scale(1.08);
+        }
+
+        .galBtn {
+            border: 1px solid rgba(191, 154, 84, .26);
+            background: rgba(242, 242, 242, .06);
+            color: rgba(242, 242, 242, .92);
+            border-radius: 14px;
+            padding: 9px 10px;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            transition: transform .2s var(--ease), background .2s var(--ease);
+            user-select: none;
+        }
+
+        .galBtn:hover { transform: translateY(-1px); background: rgba(242, 242, 242, .10); }
+        .galBtn:active { transform: translateY(0) scale(.98); }
+
+        .galThumbs {
+            padding: 14px;
+        }
+
+        .thumbGrid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        @media (max-width: 520px) {
+            .thumbGrid { grid-template-columns: 1fr; }
+        }
+
+        .thumb {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(191, 154, 84, .18);
+            background: rgba(0,0,0,.18);
+            cursor: pointer;
+            transform: translateZ(0);
+            transition: transform .22s var(--ease), border-color .22s var(--ease), filter .22s var(--ease);
+        }
+
+        .thumb:hover {
+            transform: translateY(-2px);
+            border-color: rgba(191, 154, 84, .35);
+            filter: saturate(1.05);
+        }
+
+        .thumb.active {
+            border-color: rgba(191, 154, 84, .55);
+            box-shadow: 0 14px 30px rgba(0,0,0,.35), inset 0 0 0 1px rgba(242,242,242,.06);
+        }
+
+        .thumb img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .thumb .label {
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+            right: 10px;
+            padding: 7px 8px;
+            border-radius: 14px;
+            background: linear-gradient(180deg, rgba(64, 42, 16, .55), rgba(64, 42, 16, .20));
+            border: 1px solid rgba(191, 154, 84, .18);
+            backdrop-filter: blur(10px);
+            font-family: var(--mono);
+            font-size: 11px;
+            color: rgba(242, 242, 242, .78);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
     </style>
 </head>
 
@@ -957,6 +1396,9 @@ window.addEventListener('load', hideSpinner);
                 <div class="navlinks">
                     <a class="chip" href="#protocol">Protocol</a>
                     <a class="chip" href="#systems">Systems</a>
+                    <a class="chip" href="#services">Services</a>
+                    <a class="chip" href="#recon">Recon</a>
+                    <a class="chip" href="#gallery">Gallery</a>
                     <a class="chip" href="#contact">First Contact</a>
                 </div>
 
@@ -1062,6 +1504,188 @@ window.addEventListener('load', hideSpinner);
                             <path fill="url(#g)" d="M58.7 7.7l4 7.9a35.7 35.7 0 0 1 8.6 3.6l8.3-3.2 7.1 12.3-6.8 5.6c.9 2.9 1.4 5.9 1.5 9l8.1 3.5-3.9 14-8.8-1.3a35.7 35.7 0 0 1-5.6 7.2l4 8.1-12.3 7.1-6-6.8a35.7 35.7 0 0 1-8.8 1.5l-3.4 8.1-14-3.9 1.4-8.8a35.7 35.7 0 0 1-7.2-5.6l-8.1 4-7.1-12.3 6.8-6a35.7 35.7 0 0 1-1.5-8.8l-8.1-3.4 3.9-14 8.8 1.4a35.7 35.7 0 0 1 5.6-7.2l-4-8.1 12.3-7.1 6 6.8a35.7 35.7 0 0 1 8.8-1.5l3.4-8.1 14 3.9zM50 33a17 17 0 1 0 0 34 17 17 0 0 0 0-34z" />
                         </svg>
                     </aside>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="services">
+            <div class="wrap">
+                <div class="sectionHead reveal">
+                    <h2>Services</h2>
+                    <p>Everything you need to move from a lonely signal to a stable alliance—without starting a planetary incident.</p>
+                </div>
+
+                <div class="servicesGrid">
+                    <div class="svcCard tilt reveal" data-tilt>
+                        <div class="svcIcon" aria-hidden="true">⚙</div>
+                        <h4>Profile Calibration</h4>
+                        <p>Build a species-aware signature (environment, comms, intent, risk) so the scan finds the right kind of chaos.</p>
+                        <span class="tag">SERVICE: SETUP</span>
+                    </div>
+
+                    <div class="svcCard tilt reveal" data-tilt>
+                        <div class="svcIcon" aria-hidden="true">⌁</div>
+                        <h4>Compatibility Scan</h4>
+                        <p>AI scoring ranks candidates from safest to most volatile, then maps them as radar echoes for instant decision-making.</p>
+                        <span class="tag">SERVICE: MATCHING</span>
+                    </div>
+
+                    <div class="svcCard tilt reveal" data-tilt>
+                        <div class="svcIcon" aria-hidden="true">✶</div>
+                        <h4>Mutual Match Protocol</h4>
+                        <p>Likes are stored securely; only mutual signals unlock a match—so conversations stay relevant and consent-based.</p>
+                        <span class="tag">SERVICE: TRUST</span>
+                    </div>
+
+                    <div class="svcCard tilt reveal" data-tilt>
+                        <div class="svcIcon" aria-hidden="true">✉</div>
+                        <h4>First Contact Chat</h4>
+                        <p>Open a direct channel with your match. The UI displays messages by sender/receiver for clean, readable threads.</p>
+                        <span class="tag">SERVICE: COMMS</span>
+                    </div>
+
+                    <div class="svcCard tilt reveal" data-tilt>
+                        <div class="svcIcon" aria-hidden="true">⟁</div>
+                        <h4>Risk Briefing</h4>
+                        <p>Every profile includes a risk reading to avoid “friendly” conquest proposals and other suspicious invitations.</p>
+                        <span class="tag">SERVICE: SAFETY</span>
+                    </div>
+
+                    <div class="svcCard tilt reveal" data-tilt>
+                        <div class="svcIcon" aria-hidden="true">☄</div>
+                        <h4>Mission Dashboard</h4>
+                        <p>Track who you liked, your mutual matches, and quick links to chat—so you never restart your journey on login.</p>
+                        <span class="tag">SERVICE: CONTROL</span>
+                    </div>
+                </div>
+
+                <div class="statsRow reveal">
+                    <div class="stat">
+                        <div class="num" data-count="12">0</div>
+                        <div class="label">Scan Signals / sec</div>
+                    </div>
+                    <div class="stat">
+                        <div class="num" data-count="6">0</div>
+                        <div class="label">Core Criteria</div>
+                    </div>
+                    <div class="stat">
+                        <div class="num" data-count="100">0</div>
+                        <div class="label">Risk Scale</div>
+                    </div>
+                    <div class="stat">
+                        <div class="num" data-count="2">0</div>
+                        <div class="label">Mutual Like Rule</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="recon">
+            <div class="wrap">
+                <div class="reconShell reveal">
+                    <div class="reconText">
+                        <h2>Recon Images</h2>
+                        <p>
+                            A secondary image wall for the landing page—perfect for screenshots, team photos, gameplay captures, or “world-building” visuals.
+                            Each photo floats subtly and reacts to cursor movement.
+                        </p>
+                        <div class="reconChips">
+                            <span class="chip" style="pointer-events:none;">Animated</span>
+                            <span class="chip" style="pointer-events:none;">Responsive</span>
+                            <span class="chip" style="pointer-events:none;">Easy to Replace</span>
+                        </div>
+                    </div>
+
+                    <div class="reconPhotos" id="reconPhotos" aria-label="Recon photo wall">
+                        <figure class="photoCard pc1" data-parallax>
+                            <img loading="lazy" src="https://images.unsplash.com/photo-1541873676-a18131494184?auto=format&fit=crop&w=1200&q=70" alt="Recon photo 1">
+                            <figcaption>Station Corridor • Night Shift</figcaption>
+                        </figure>
+                        <figure class="photoCard pc2" data-parallax>
+                            <img loading="lazy" src="https://images.unsplash.com/photo-1484611949659-82fabb0a4f22?auto=format&fit=crop&w=1200&q=70" alt="Recon photo 2">
+                            <figcaption>Brass Console • Signal Array</figcaption>
+                        </figure>
+                        <figure class="photoCard pc3" data-parallax>
+                            <img loading="lazy" src="https://images.unsplash.com/photo-1520975693053-bb5c6b2f73cc?auto=format&fit=crop&w=1200&q=70" alt="Recon photo 3">
+                            <figcaption>Engine Deck • Thermal Sweep</figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="gallerySection section" id="gallery">
+            <div class="wrap">
+                <div class="galleryHead reveal">
+                    <div>
+                        <h3>Sector Gallery</h3>
+                        <p>Visual dossiers from the station: ships, habitats, anomalies, and operator moments. Replace these images with yours anytime.</p>
+                    </div>
+                    <a class="chip" href="#contact">Upload later ▸</a>
+                </div>
+
+                <div class="galleryShell tilt reveal" data-tilt>
+                    <div class="galleryGrid">
+                        <div class="galMain">
+                            <div class="galFrame" id="galFrame">
+                                <!-- Slides -->
+                                <div class="galSlide active" data-title="Brass Horizon Docks" data-sub="Docking bay • Sector 7 • 03:14">
+                                    <img loading="lazy" src="https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=1600&q=70" alt="Docking bay" />
+                                </div>
+                                <div class="galSlide" data-title="Automaton Assembly Line" data-sub="Machine quarter • Quiet hours • 19:02">
+                                    <img loading="lazy" src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?auto=format&fit=crop&w=1600&q=70" alt="Robotics" />
+                                </div>
+                                <div class="galSlide" data-title="Xeno Market Lanterns" data-sub="Trade ring • Pheromone-safe zone • 22:47">
+                                    <img loading="lazy" src="https://images.unsplash.com/photo-1520975693411-96f12a6f6cda?auto=format&fit=crop&w=1600&q=70" alt="Market" />
+                                </div>
+                                <div class="galSlide" data-title="Anomaly Glass Storm" data-sub="Outer belt • Hazard notice • RED">
+                                    <img loading="lazy" src="https://images.unsplash.com/photo-1520975693053-bb5c6b2f73cc?auto=format&fit=crop&w=1600&q=70" alt="Storm" />
+                                </div>
+
+                                <!-- Caption + controls -->
+                                <div class="galCaption">
+                                    <div>
+                                        <strong id="galTitle">Brass Horizon Docks</strong>
+                                        <span id="galSub">Docking bay • Sector 7 • 03:14</span>
+                                    </div>
+                                    <div class="galControls">
+                                        <button class="galBtn" type="button" id="galPrev">◂</button>
+                                        <div class="galDots" id="galDots" aria-label="Gallery navigation"></div>
+                                        <button class="galBtn" type="button" id="galNext">▸</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="galThumbs">
+                            <div class="thumbGrid" id="thumbGrid">
+                                <div class="thumb active" data-index="0">
+                                    <img loading="lazy" src="https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=800&q=60" alt="Thumb 1" />
+                                    <div class="label">Brass Horizon Docks</div>
+                                </div>
+                                <div class="thumb" data-index="1">
+                                    <img loading="lazy" src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?auto=format&fit=crop&w=800&q=60" alt="Thumb 2" />
+                                    <div class="label">Automaton Assembly Line</div>
+                                </div>
+                                <div class="thumb" data-index="2">
+                                    <img loading="lazy" src="https://images.unsplash.com/photo-1520975693411-96f12a6f6cda?auto=format&fit=crop&w=800&q=60" alt="Thumb 3" />
+                                    <div class="label">Xeno Market Lanterns</div>
+                                </div>
+                                <div class="thumb" data-index="3">
+                                    <img loading="lazy" src="https://images.unsplash.com/photo-1520975693053-bb5c6b2f73cc?auto=format&fit=crop&w=800&q=60" alt="Thumb 4" />
+                                    <div class="label">Anomaly Glass Storm</div>
+                                </div>
+                            </div>
+
+                            <div style="margin-top:12px;">
+                                <div class="miniCard" style="min-height:auto;">
+                                    <h3>Tip</h3>
+                                    <p>To replace images: swap the <b>src</b> URLs in the slides + thumbnails. Keep the same number of slides for the dots to match.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1174,6 +1798,163 @@ window.addEventListener('load', hideSpinner);
             threshold: 0.15
         });
         reveals.forEach(el => io.observe(el));
+
+        // ---------------------------
+        
+        // ---------------------------
+        // Count-up stats (Services)
+        // ---------------------------
+        const countEls = [...document.querySelectorAll("[data-count]")];
+        function animateCount(el) {
+            const target = Number(el.getAttribute("data-count") || "0");
+            const dur = 800;
+            const t0 = performance.now();
+            function step(t) {
+                const p = Math.min(1, (t - t0) / dur);
+                const v = Math.round(target * (0.15 + 0.85 * p));
+                el.textContent = String(v);
+                if (p < 1) requestAnimationFrame(step);
+                else el.textContent = String(target);
+            }
+            requestAnimationFrame(step);
+        }
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    animateCount(e.target);
+                    statsObserver.unobserve(e.target);
+                }
+            });
+        }, { threshold: .45 });
+        countEls.forEach(el => statsObserver.observe(el));
+
+        // ---------------------------
+        // Recon parallax (secondary image wall)
+        // ---------------------------
+        const recon = document.getElementById("reconPhotos");
+        if (recon) {
+            const cards = [...recon.querySelectorAll("[data-parallax]")];
+            // add gentle float animations
+            if (cards[0]) cards[0].classList.add("floatA");
+            if (cards[1]) cards[1].classList.add("floatB");
+            if (cards[2]) cards[2].classList.add("floatC");
+
+            const move = (ev) => {
+                const r = recon.getBoundingClientRect();
+                const x = (ev.clientX - r.left) / r.width - 0.5;
+                const y = (ev.clientY - r.top) / r.height - 0.5;
+
+                cards.forEach((c, i) => {
+                    const k = (i + 1) * 6;
+                    c.style.transform = `translate3d(${x * k}px, ${y * k}px, 0) rotate(${i === 0 ? -3 : i === 1 ? 3 : 1}deg)`;
+                });
+            };
+
+            recon.addEventListener("mousemove", move);
+            recon.addEventListener("mouseleave", () => {
+                cards.forEach((c, i) => c.style.transform = "");
+            });
+        }
+
+
+        // Gallery (auto-cycle + click + subtle parallax)
+        // ---------------------------
+        (function () {
+            const frame = document.getElementById("galFrame");
+            const slides = frame ? [...frame.querySelectorAll(".galSlide")] : [];
+            const thumbsWrap = document.getElementById("thumbGrid");
+            const thumbs = thumbsWrap ? [...thumbsWrap.querySelectorAll(".thumb")] : [];
+            const dotsWrap = document.getElementById("galDots");
+            const titleEl = document.getElementById("galTitle");
+            const subEl = document.getElementById("galSub");
+            const btnPrev = document.getElementById("galPrev");
+            const btnNext = document.getElementById("galNext");
+
+            if (!frame || slides.length === 0) return;
+
+            let idx = 0;
+            let timer = null;
+
+            function setActive(n) {
+                idx = (n + slides.length) % slides.length;
+
+                slides.forEach((s, i) => s.classList.toggle("active", i === idx));
+                thumbs.forEach((t, i) => t.classList.toggle("active", i === idx));
+
+                // Dots
+                if (dotsWrap) {
+                    [...dotsWrap.children].forEach((d, i) => d.classList.toggle("active", i === idx));
+                }
+
+                const s = slides[idx];
+                if (titleEl) titleEl.textContent = s.getAttribute("data-title") || "Sector Capture";
+                if (subEl) subEl.textContent = s.getAttribute("data-sub") || "Archive • Unclassified";
+            }
+
+            // Build dots
+            if (dotsWrap) {
+                dotsWrap.innerHTML = "";
+                slides.forEach((_, i) => {
+                    const d = document.createElement("button");
+                    d.type = "button";
+                    d.className = "galDot" + (i === 0 ? " active" : "");
+                    d.setAttribute("aria-label", "Go to image " + (i + 1));
+                    d.addEventListener("click", () => { setActive(i); reset(); });
+                    dotsWrap.appendChild(d);
+                });
+            }
+
+            // Thumb click
+            thumbs.forEach(t => {
+                t.addEventListener("click", () => {
+                    const n = parseInt(t.getAttribute("data-index") || "0", 10);
+                    setActive(n);
+                    reset();
+                });
+            });
+
+            // Prev/Next
+            btnPrev?.addEventListener("click", () => { setActive(idx - 1); reset(); });
+            btnNext?.addEventListener("click", () => { setActive(idx + 1); reset(); });
+
+            // Auto cycle (pauses on hover)
+            function start() {
+                stop();
+                timer = setInterval(() => setActive(idx + 1), 5200);
+            }
+            function stop() { if (timer) clearInterval(timer); timer = null; }
+            function reset() { start(); }
+
+            frame.addEventListener("mouseenter", stop);
+            frame.addEventListener("mouseleave", start);
+
+            // Subtle parallax highlight using CSS vars already used by tilt
+            frame.addEventListener("mousemove", (e) => {
+                const r = frame.getBoundingClientRect();
+                const x = (e.clientX - r.left) / r.width;
+                const y = (e.clientY - r.top) / r.height;
+                frame.style.setProperty("--mx", (x * 100).toFixed(2) + "%");
+                frame.style.setProperty("--my", (y * 100).toFixed(2) + "%");
+            });
+            frame.addEventListener("mouseleave", () => {
+                frame.style.setProperty("--mx", "50%");
+                frame.style.setProperty("--my", "45%");
+            });
+
+            // Start only when visible (performance)
+            const gio = new IntersectionObserver((entries) => {
+                entries.forEach(en => {
+                    if (en.isIntersecting) start();
+                    else stop();
+                });
+            }, { threshold: 0.25 });
+            gio.observe(frame);
+
+            // Init caption
+            setActive(0);
+        })();
+
+
 
         // ---------------------------
         // Radar Canvas (animated sweep + blips)

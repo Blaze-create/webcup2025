@@ -446,7 +446,7 @@
         <div class="brand">
           <div class="badge" aria-hidden="true"></div>
           <div>
-            <h1><img src="{{ asset('img/logo.png') }}" width="200" alt=""></h1>
+            <h1><a href="{{ route('home') }}"><img src="{{ asset('img/logo.png') }}" width="200" alt=""></a></h1>
             <p>Login • Station Access Request</p>
           </div>
         </div>

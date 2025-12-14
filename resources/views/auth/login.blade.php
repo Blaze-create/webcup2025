@@ -489,7 +489,7 @@
 
         <div class="actions">
           <button class="btn" id="btnCreate" type="submit">Login</button>
-          <button class="btn ghost" type="reset">Reset</button>
+          <a class="btn ghost"href="{{ route('register') }}">dont have an account</a>
         </div>
 
         <div class="hint" id="finalHint"></div>

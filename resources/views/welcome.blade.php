@@ -1599,15 +1599,15 @@ window.addEventListener('load', hideSpinner);
 
                     <div class="reconPhotos" id="reconPhotos" aria-label="Recon photo wall">
                         <figure class="photoCard pc1" data-parallax>
-                            <img loading="lazy" src="https://images.unsplash.com/photo-1541873676-a18131494184?auto=format&fit=crop&w=1200&q=70" alt="Recon photo 1">
+                            <img loading="lazy" src="{{ asset('img/9.jpeg') }}" alt="Recon photo 1">
                             <figcaption>Station Corridor • Night Shift</figcaption>
                         </figure>
                         <figure class="photoCard pc2" data-parallax>
-                            <img loading="lazy" src="https://images.unsplash.com/photo-1484611949659-82fabb0a4f22?auto=format&fit=crop&w=1200&q=70" alt="Recon photo 2">
+                            <img loading="lazy" src="{{ asset('img/1.jpeg') }}" alt="Recon photo 2">
                             <figcaption>Brass Console • Signal Array</figcaption>
                         </figure>
                         <figure class="photoCard pc3" data-parallax>
-                            <img loading="lazy" src="https://images.unsplash.com/photo-1520975693053-bb5c6b2f73cc?auto=format&fit=crop&w=1200&q=70" alt="Recon photo 3">
+                            <img loading="lazy" src="{{ asset('img/8.jpeg') }}" alt="Recon photo 3">
                             <figcaption>Engine Deck • Thermal Sweep</figcaption>
                         </figure>
                     </div>
@@ -1621,7 +1621,7 @@ window.addEventListener('load', hideSpinner);
                 <div class="galleryHead reveal">
                     <div>
                         <h3>Sector Gallery</h3>
-                        <p>Visual dossiers from the station: ships, habitats, anomalies, and operator moments. Replace these images with yours anytime.</p>
+                        <p>Have a look to our gallery section where you can see related Images</p>
                     </div>
                     <a class="chip" href="#contact">Upload later ▸</a>
                 </div>
@@ -1632,23 +1632,23 @@ window.addEventListener('load', hideSpinner);
                             <div class="galFrame" id="galFrame">
                                 <!-- Slides -->
                                 <div class="galSlide active" data-title="Brass Horizon Docks" data-sub="Docking bay • Sector 7 • 03:14">
-                                    <img loading="lazy" src="https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=1600&q=70" alt="Docking bay" />
+                                    <img loading="lazy" src="{{ asset('img/4.jpeg') }}" alt="Docking bay" />
                                 </div>
                                 <div class="galSlide" data-title="Automaton Assembly Line" data-sub="Machine quarter • Quiet hours • 19:02">
-                                    <img loading="lazy" src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?auto=format&fit=crop&w=1600&q=70" alt="Robotics" />
+                                    <img loading="lazy" src="{{asset('img/5.jpeg')}}" alt="Robotics" />
                                 </div>
                                 <div class="galSlide" data-title="Xeno Market Lanterns" data-sub="Trade ring • Pheromone-safe zone • 22:47">
-                                    <img loading="lazy" src="https://images.unsplash.com/photo-1520975693411-96f12a6f6cda?auto=format&fit=crop&w=1600&q=70" alt="Market" />
+                                    <img loading="lazy" src="{{asset('img/6.jpeg')}}" alt="Market" />
                                 </div>
                                 <div class="galSlide" data-title="Anomaly Glass Storm" data-sub="Outer belt • Hazard notice • RED">
-                                    <img loading="lazy" src="https://images.unsplash.com/photo-1520975693053-bb5c6b2f73cc?auto=format&fit=crop&w=1600&q=70" alt="Storm" />
+                                    <img loading="lazy" src="{{asset('img/6.jpeg')}}" alt="Storm" />
                                 </div>
 
                                 <!-- Caption + controls -->
                                 <div class="galCaption">
                                     <div>
-                                        <strong id="galTitle">Brass Horizon Docks</strong>
-                                        <span id="galSub">Docking bay • Sector 7 • 03:14</span>
+                                        <strong id="galTitle">Have a look</strong>
+                                        <span id="galSub">DIESEL PUNK</span>
                                     </div>
                                     <div class="galControls">
                                         <button class="galBtn" type="button" id="galPrev">◂</button>
@@ -1662,27 +1662,27 @@ window.addEventListener('load', hideSpinner);
                         <div class="galThumbs">
                             <div class="thumbGrid" id="thumbGrid">
                                 <div class="thumb active" data-index="0">
-                                    <img loading="lazy" src="https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=800&q=60" alt="Thumb 1" />
-                                    <div class="label">Brass Horizon Docks</div>
+                                    <img loading="lazy" src="{{asset('img/5.jpeg')}}" alt="Thumb 1" />
+                                    <div class="label">DIESEL PUNK</div>
                                 </div>
                                 <div class="thumb" data-index="1">
-                                    <img loading="lazy" src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?auto=format&fit=crop&w=800&q=60" alt="Thumb 2" />
-                                    <div class="label">Automaton Assembly Line</div>
+                                    <img loading="lazy" src="{{asset('img/9.jpeg')}}" alt="Thumb 2" />
+                                    <div class="label">DIESEL PUNK</div>
                                 </div>
                                 <div class="thumb" data-index="2">
-                                    <img loading="lazy" src="https://images.unsplash.com/photo-1520975693411-96f12a6f6cda?auto=format&fit=crop&w=800&q=60" alt="Thumb 3" />
-                                    <div class="label">Xeno Market Lanterns</div>
+                                    <img loading="lazy" src="{{asset('img/2.jpeg')}}" alt="Thumb 3" />
+                                    <div class="label">DIESEL PUNK</div>
                                 </div>
                                 <div class="thumb" data-index="3">
-                                    <img loading="lazy" src="https://images.unsplash.com/photo-1520975693053-bb5c6b2f73cc?auto=format&fit=crop&w=800&q=60" alt="Thumb 4" />
-                                    <div class="label">Anomaly Glass Storm</div>
+                                    <img loading="lazy" src="{{asset('img/6.jpeg')}}" alt="Thumb 4" />
+                                    <div class="label">DIESEL PUNK</div>
                                 </div>
                             </div>
 
                             <div style="margin-top:12px;">
                                 <div class="miniCard" style="min-height:auto;">
-                                    <h3>Tip</h3>
-                                    <p>To replace images: swap the <b>src</b> URLs in the slides + thumbnails. Keep the same number of slides for the dots to match.</p>
+                                    <h3>Smile</h3>
+                                    <p>Hope you like our work</p>
                                 </div>
                             </div>
                         </div>

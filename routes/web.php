@@ -48,7 +48,10 @@ Route::middleware('auth')->group(function () {
 
 });
 
-Route::view('/match', 'match.match')->name('match.page');
+// Route::view('/match', 'match.match')->name('match.page');
+Route::middleware('auth')->get('/match', [RadarController::class, 'matchPage'])
+    ->name('match.page');
+
 Route::view('/matches', 'match.matches')->name('matches.page');
 
 //for liking

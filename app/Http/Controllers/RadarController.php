@@ -52,15 +52,26 @@ class RadarController extends Controller
                     ->whereNotIn('user_id', $likedIds);            // not already liked
             }
 
-            $candidates = $candidatesQuery->get()->all();
+            $candidates = $candidatesQuery->get(); // Collection
 
-            $results = $ai->rankMatches($data, $candidates);
+            // ✅ NO CANDIDATES
+            if ($candidates->isEmpty()) {
+                return response()->json([
+                    'ok' => true,
+                    'count' => 0,
+                    'results' => [],
+                    'message' => 'No candidates available yet. Ask an admin to seed more profiles/users.',
+                ]);
+            }
+
+            $results = $ai->rankMatches($data, $candidates->all()); // array passed to service
 
             return response()->json([
                 'ok' => true,
                 'count' => count($results),
                 'results' => $results,
             ]);
+
     }
 
 

@@ -341,15 +341,24 @@ ${profile.name} is now in your Matches list.`;
   /* ============================
      BOOT
   ============================ */
+  // (async function boot() {
+  //   likesCount = 0;
+  //   updateLikesUi();
+
+  //   // matches count from DB
+  //   matchesEl.textContent = "0";
+  //   await refreshMatchesCount();
+
+  //   // load deck from DB-matching endpoint
+  //   await fetchMatches();
+  // })();
   (async function boot() {
-    likesCount = 0;
-    updateLikesUi();
-
-    // matches count from DB
+    likesEl.textContent = "0";
     matchesEl.textContent = "0";
-    await refreshMatchesCount();
 
-    // load deck from DB-matching endpoint
+    await refreshLikesCount();     // ✅ loads likes from DB
+    await refreshMatchesCount();   // ✅ loads matches from DB
+
     await fetchMatches();
   })();
 

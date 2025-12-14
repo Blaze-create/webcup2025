@@ -90,7 +90,7 @@ function renderMatches(results) {
   results.forEach((m, i) => {
 
     const link = document.createElement('a');
-    link.href = `/matches/${m.name}`;   // <-- Laravel route
+    link.href = `/chat/${m.name}`;   // <-- Laravel route
     link.className = 'match-link';         // for styling
     link.style.textDecoration = 'none';
 

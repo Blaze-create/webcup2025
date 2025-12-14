@@ -662,10 +662,284 @@
                 display: none;
             }
         }
+
+        .custom-loader {
+            width: 50px;
+            height: 50px;
+            display: grid;
+            color: #766DF4;
+            background: radial-gradient(farthest-side, currentColor calc(100% - 6px), #0000 calc(100% - 5px) 0);
+            -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 13px), #000 calc(100% - 12px));
+            border-radius: 50%;
+            animation: s9 2s infinite linear;
+        }
+
+        .custom-loader::before,
+        .custom-loader::after {
+            content: "";
+            grid-area: 1/1;
+            background:
+                linear-gradient(currentColor 0 0) center,
+                linear-gradient(currentColor 0 0) center;
+            background-size: 100% 10px, 10px 100%;
+            background-repeat: no-repeat;
+        }
+
+        .custom-loader::after {
+            transform: rotate(45deg);
+        }
+
+        @keyframes s9 {
+            100% {
+                transform: rotate(1turn)
+            }
+        }
+
+        #spinner-container {
+            position: fixed;
+            inset: 0;
+            /* top:0 right:0 bottom:0 left:0 */
+            width: 100vw;
+            height: 100vh;
+
+            display: flex;
+            align-items: center;
+            /* vertical center */
+            justify-content: center;
+            /* horizontal center */
+
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+        }
+
+        .spinner-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        /* Outer gear ring */
+        .gear-outer {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            top: 10px;
+            left: 10px;
+            border: 4px solid #BF9A54;
+            border-radius: 50%;
+            animation: rotate 3s linear infinite;
+        }
+
+        /* Gear teeth effect */
+        .gear-outer::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow:
+                0 -92px 0 -88px #BF9A54,
+                64px -64px 0 -88px #BF9A54,
+                92px 0 0 -88px #BF9A54,
+                64px 64px 0 -88px #BF9A54,
+                0 92px 0 -88px #BF9A54,
+                -64px 64px 0 -88px #BF9A54,
+                -92px 0 0 -88px #BF9A54,
+                -64px -64px 0 -88px #BF9A54;
+        }
+
+        /* Middle ring - counter rotating */
+        .gear-middle {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            top: 40px;
+            left: 40px;
+            border: 3px solid #8C5D23;
+            border-radius: 50%;
+            animation: rotate-reverse 2s linear infinite;
+        }
+
+        .gear-middle::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow:
+                0 -62px 0 -59px #8C5D23,
+                44px -44px 0 -59px #8C5D23,
+                62px 0 0 -59px #8C5D23,
+                44px 44px 0 -59px #8C5D23,
+                0 62px 0 -59px #8C5D23,
+                -44px 44px 0 -59px #8C5D23,
+                -62px 0 0 -59px #8C5D23,
+                -44px -44px 0 -59px #8C5D23;
+        }
+
+        /* Heart center */
+        .heart-center {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            top: 80px;
+            left: 80px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .heart-center::before,
+        .heart-center::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 32px;
+            background: #BF9A54;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .heart-center::before {
+            left: 10px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .heart-center::after {
+            left: 10px;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        /* Rivets */
+        .rivet {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #594622;
+            border-radius: 50%;
+            border: 1px solid #BF9A54;
+        }
+
+        .rivet:nth-child(1) {
+            top: 5px;
+            left: 96px;
+        }
+
+        .rivet:nth-child(2) {
+            top: 96px;
+            right: 5px;
+        }
+
+        .rivet:nth-child(3) {
+            bottom: 5px;
+            left: 96px;
+        }
+
+        .rivet:nth-child(4) {
+            top: 96px;
+            left: 5px;
+        }
+
+        /* Loading text */
+        .loading-text {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #F2F2F2;
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        .loading-text::after {
+            content: '...';
+            animation: dots 1.5s steps(3, end) infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes rotate-reverse {
+            from {
+                transform: rotate(360deg);
+            }
+
+            to {
+                transform: rotate(0deg);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes dots {
+
+            0%,
+            20% {
+                content: '.';
+            }
+
+            40% {
+                content: '..';
+            }
+
+            60%,
+            100% {
+                content: '...';
+            }
+        }
     </style>
 </head>
 
 <body>
+    <div id="spinner-container">
+        <!-- <div class="custom-loader"></div> -->
+
+        <div class="spinner-container">
+            <div class="gear-outer"></div>
+            <div class="gear-middle"></div>
+            <div class="heart-center"></div>
+            <div class="rivet"></div>
+            <div class="rivet"></div>
+            <div class="rivet"></div>
+            <div class="rivet"></div>
+            <div class="loading-text">Connecting</div>
+        </div>
+    </div>
+
+<script>
+    const spinner = document.getElementById('spinner-container');
+
+function showSpinner() {
+  spinner.style.display = 'flex';
+}
+
+function hideSpinner() {
+  spinner.style.display = 'none';
+}
+
+// Example: hide when page loads
+window.addEventListener('load', hideSpinner);
+</script>
     <div class="grain"></div>
     <div class="scanlines"></div>
 
@@ -692,7 +966,7 @@
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
 
-                      <button class="btn btn-ghost" href={{ route('logout') }}>Log Out</button>
+                        <button class="btn btn-ghost" href={{ route('logout') }}>Log Out</button>
                     </form>
                     @endauth
 

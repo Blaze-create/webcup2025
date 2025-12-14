@@ -6,6 +6,8 @@ use App\Http\Controllers\RadarController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\MatchController;
 
+use App\Http\Controllers\MatchesController;
+
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
@@ -66,6 +68,19 @@ Route::middleware('auth')->get(
 Route::middleware('web')->group(function () {
     Route::get('/radar', [RadarController::class, 'index'])->name('radar.index');
     Route::post('/radar/matches', [RadarController::class, 'matches'])->name('radar.matches');
+});
+
+
+Route::view('/matches', 'match.matches')->name('matches.page');
+//MatchsController to text
+Route::middleware('auth')->group(function () {
+    Route::view('/matches', 'match.matches')->name('matches.page');
+
+    Route::get('/matches/data', [MatchesController::class, 'data'])->name('matches.data');
+    Route::get('/matches/notifications', [MatchesController::class, 'notifications'])->name('matches.notifications');
+
+    Route::post('/matches/requests/{id}/accept', [MatchesController::class, 'accept'])->name('matches.accept');
+    Route::post('/matches/requests/{id}/decline', [MatchesController::class, 'decline'])->name('matches.decline');
 });
 
 // Route::get('chats/chat',[RadarController::class,'matches'])->name('chat.matches');

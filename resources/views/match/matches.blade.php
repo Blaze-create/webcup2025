@@ -13,7 +13,7 @@
   <div class="wrap">
     <div class="nav">
       <div class="brand">
-        <h1>IAstroMatch</h1>
+        <h1><img src="{{ asset('img/logo.png') }}" width="200" alt=""></h1>
         <p>Matches • Secure channels unlocked</p>
       </div>
       <a class="link" href="match.html">← Back to Deck</a>

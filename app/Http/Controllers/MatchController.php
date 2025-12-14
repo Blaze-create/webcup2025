@@ -12,27 +12,33 @@ class MatchController extends Controller
     public function like(Request $request)
     {
         $request->validate(['liked_id' => 'required|exists:users,id']);
+
         $me = auth()->id();
         $them = (int) $request->liked_id;
+
+        if (!$me) {
+            return response()->json(['ok' => false, 'message' => 'Unauthenticated'], 401);
+        }
 
         if ($me === $them) {
             return response()->json(['ok' => false, 'message' => 'Cannot like yourself'], 422);
         }
 
-        // 1) save like (ignore if already liked)
-        Like::firstOrCreate([
+        // Save like
+        $like = Like::firstOrCreate([
             'liker_id' => $me,
             'liked_id' => $them,
         ]);
 
-        // 2) check reverse like
-        $reverse = Like::where('liker_id', $them)->where('liked_id', $me)->exists();
+        // Check reverse like
+        $reverse = Like::where('liker_id', $them)
+            ->where('liked_id', $me)
+            ->exists();
 
         $matched = false;
         $matchId = null;
 
         if ($reverse) {
-            // normalize pair order
             $a = min($me, $them);
             $b = max($me, $them);
 

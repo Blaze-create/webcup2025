@@ -49,6 +49,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::view('/match', 'match.match')->name('match.page');
+Route::view('/matches', 'match.matches')->name('matches.page');
+
+//for liking
+Route::middleware(['auth'])->post('/like', [MatchController::class, 'like'])->name('like');
 
 
 // Route::post('/matches', [RadarController::class, 'matches'])->name('matches');

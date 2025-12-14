@@ -1,5 +1,6 @@
 const csrf = document.querySelector('meta[name="csrf-token"]')?.content;
 
+
 const els = {
   btnScan: document.getElementById('btnScan'),
   btnLoadDemo: document.getElementById('btnLoadDemo'),
@@ -10,7 +11,9 @@ const els = {
   form: document.getElementById('profileForm'),
   risk: document.getElementById('risk'),
   riskLabel: document.getElementById('riskLabel'),
+  overlay: document.getElementById('scanOverlay'),
 };
+
 
 const DEMO_PROFILE = {
   name: "Operator R-17",
@@ -285,10 +288,38 @@ function init() {
     logLine("DEMO PROFILE LOADED.", "muted");
   });
 
-  // els.btnScan.addEventListener('click', () => scan());
   els.btnScan.addEventListener('click', () => {
-    window.location.href = '/match';
-  });
+    const profile = formToProfile();
+
+    // Basic validation
+    if (Number(profile.tempMin) > Number(profile.tempMax)) {
+      logLine("ERROR: tempMin cannot be greater than tempMax.", "bad");
+      return;
+    }
+
+    // Save profile for /match page to use
+    localStorage.setItem('dp_operator_profile', JSON.stringify(profile));
+
+    // Overlay animation
+    if (els.overlay) els.overlay.classList.remove('hidden');
+
+    els.btnScan.disabled = true;
+    const oldText = els.btnScan.textContent;
+    els.btnScan.textContent = 'SCANNING…';
+
+    logLine("Initializing compatibility scan…", "muted");
+    setTimeout(() => logLine("Cross-referencing candidates…", "muted"), 500);
+    setTimeout(() => logLine("Lock acquired. Redirecting…", "muted"), 1100);
+
+    setTimeout(() => {
+      // hide overlay before leaving
+      if (els.overlay) els.overlay.classList.add('hidden');
+
+      els.btnScan.textContent = oldText; // optional
+      window.location.href = "/match";
+    }, 1600);
+
+  }, { once: true });
 
 
   logLine("SYSTEM READY. Awaiting operator scan command.", "muted");

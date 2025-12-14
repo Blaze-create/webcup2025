@@ -124,3 +124,59 @@ button.ghost{
 .badge.disaster,.badge.dangerous{border-color:rgba(255,91,91,.45);color:var(--danger)}
 .card p{margin:8px 0 0;color:var(--ink);font-size:12px;line-height:1.35}
 .meta{margin-top:8px;color:var(--muted);font-size:11px}
+
+
+/* #region Overlay Animation  */
+
+
+  /* ===== Scan Overlay ===== */
+    .scan-overlay{
+      position:fixed;
+      inset:0;
+      background: radial-gradient(circle at center, rgba(191,154,84,.18), rgba(0,0,0,.88));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+      backdrop-filter: blur(4px);
+    }
+    .scan-overlay.hidden{ display:none; }
+
+    .scan-core{
+      position:relative;
+      text-align:center;
+    }
+
+    .scan-ring{
+      position:absolute;
+      inset:0;
+      margin:auto;
+      width:160px;
+      height:160px;
+      border-radius:50%;
+      border:2px solid rgba(191,154,84,.6);
+      animation: scanPulse 1.4s ease-out infinite;
+    }
+    .scan-ring.delay{
+      animation-delay:.7s;
+      opacity:.6;
+    }
+
+    .scan-text{
+      margin-top:190px;
+      letter-spacing:2px;
+      font-size:14px;
+      color:var(--brass);
+    }
+
+    @keyframes scanPulse{
+      0%{ transform:scale(.4); opacity:0; }
+      30%{ opacity:1; }
+      100%{ transform:scale(1.4); opacity:0; }
+    }
+
+
+
+
+/* #endregion Overlay Animation  */
+

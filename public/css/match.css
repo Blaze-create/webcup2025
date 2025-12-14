@@ -69,6 +69,7 @@ main{height:calc(100% - 73px); display:grid; place-items:center; padding:16px;}
 .deck{
   border:1px solid rgba(191,154,84,.18);
   background: rgba(0,0,0,.18);
+  
   border-radius:16px;
   padding:12px;
 }
@@ -80,6 +81,7 @@ main{height:calc(100% - 73px); display:grid; place-items:center; padding:16px;}
   border-radius:14px;
   overflow:hidden;
   background: rgba(0,0,0,.12);
+  background: #2e2e2e;
 }
 .profile{
   position:absolute;
@@ -87,9 +89,10 @@ main{height:calc(100% - 73px); display:grid; place-items:center; padding:16px;}
   height:280px;
   border-radius:18px;
   border:1px solid rgba(191,154,84,.22);
-  background:
+  /* background:
     radial-gradient(circle at var(--mx,40%) var(--my,30%), rgba(242,242,242,.16), transparent 55%),
-    linear-gradient(180deg, rgba(242,242,242,.07), rgba(242,242,242,.04));
+    linear-gradient(180deg, rgba(242,242,242,.07), rgba(242,242,242,.04)); */
+   background: #3a2f22;
   box-shadow: 0 24px 70px rgba(0,0,0,.35);
   padding:14px;
   transform-style:preserve-3d;
@@ -207,3 +210,13 @@ main{height:calc(100% - 73px); display:grid; place-items:center; padding:16px;}
   overflow:hidden; text-overflow:ellipsis;
 }
 .toast.on{ opacity:1; transform:translateX(-50%) translateY(-4px); }
+
+/* for liking button */
+#btnLike.liked,
+#btnSuper.liked{
+  background: #BF9A54;
+  color: #402A10;
+  box-shadow: 0 0 22px rgba(191,154,84,.65);
+  transform: scale(1.12);
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}

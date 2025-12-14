@@ -9,6 +9,9 @@
   <link rel="stylesheet" href="/css/radar.css">
 </head>
 <body>
+
+
+
   
   <div class="wrap">
     <header class="topbar">
@@ -141,6 +144,18 @@
       </section>
     </main>
   </div>
+
+  
+  <!-- Scan Overlay  animation-->
+  <div id="scanOverlay" class="scan-overlay hidden">
+    <div class="scan-core">
+      <div class="scan-ring"></div>
+      <div class="scan-ring delay"></div>
+      <div class="scan-text">SCANNING SIGNALS…</div>
+    </div>
+  </div>
+
+
 
   <script src="/js/radar.js"></script>
 </body>

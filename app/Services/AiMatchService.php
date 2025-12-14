@@ -39,7 +39,7 @@ class AiMatchService
         }
 
         usort($scored, fn($a, $b) => $b['score'] <=> $a['score']);
-        return array_slice($scored, 0, 4);
+        return array_slice($scored, 0, 11);
     }
 
     public function score(array $u, array $c): array

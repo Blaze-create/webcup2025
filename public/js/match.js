@@ -5,7 +5,7 @@
   const $ = (s) => document.querySelector(s);
 
   const stack = $("#stack");
-  const likesEl = $("#likes");
+  const likessEl = $("#likess");
   const matchesEl = $("#matches");
   const analystEl = $("#analyst");
   const toast = $("#toast");
@@ -48,7 +48,7 @@
   /* ============================
      COUNTERS (DB)
   ============================ */
-  let likesCount = 0; // only for UI feedback this session
+  //let likesCount = 0; // only for UI feedback this session
 
   async function refreshMatchesCount() {
     // Uses your MatchController@myMatches (GET /matches-data)
@@ -64,20 +64,24 @@
   }
 
   async function refreshLikesCount() {
-    try {
-      const res = await fetch('/match/likes-count', { headers: { 'Accept': 'application/json' } });
-      const data = await res.json();
-      if (data?.ok) {
-        likesEl.textContent = String(data.count ?? 0);
-      }
-    } catch {
-      // ignore
-    }
-  }
+  if (!likesEl) return; // ✅ prevents crash
 
-  function updateLikesUi() {
-    likesEl.textContent = String(likesCount);
+  try {
+    const res = await fetch('/match/likes-count', { headers: { 'Accept': 'application/json' } });
+    const data = await res.json();
+    if (data?.ok) {
+      likesEl.textContent = String(data.count ?? 0);
+    }
+  } catch {
+    // ignore
   }
+}
+
+
+
+  // function updateLikesUi() {
+  //   likesEl.textContent = String(likesCount);
+  // }
 
   /* ============================
      API: LIKE (DB)
@@ -175,8 +179,6 @@
       return;
     }
 
-    // UI feedback
-     likesEl.textContent = String((Number(likesEl.textContent) || 0) + 1);
 
     // Button glow feedback
     if (action === "LIKE" && btnLike) btnLike.classList.add("liked");
@@ -194,8 +196,8 @@
         if (data.matched) {
           pop("It’s a Match!");
           analystEl.textContent =
-`MATCH CONFIRMED ✅
-${profile.name} is now in your Matches list.`;
+          `MATCH CONFIRMED ✅
+          ${profile.name} is now in your Matches list.`;
 
           // Update matches counter from DB
           await refreshMatchesCount();
@@ -352,11 +354,12 @@ ${profile.name} is now in your Matches list.`;
   //   // load deck from DB-matching endpoint
   //   await fetchMatches();
   // })();
+
+
   (async function boot() {
-    likesEl.textContent = "0";
+    likessEl.textContent = "0";
     matchesEl.textContent = "0";
 
-    await refreshLikesCount();     // ✅ loads likes from DB
     await refreshMatchesCount();   // ✅ loads matches from DB
 
     await fetchMatches();

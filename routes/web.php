@@ -71,10 +71,10 @@ Route::middleware('web')->group(function () {
 });
 
 
-Route::view('/matches', 'match.matches')->name('matches.page');
+
 //MatchsController to text
 Route::middleware('auth')->group(function () {
-    Route::view('/matches', 'match.matches')->name('matches.page');
+
 
     Route::get('/matches/data', [MatchesController::class, 'data'])->name('matches.data');
     Route::get('/matches/notifications', [MatchesController::class, 'notifications'])->name('matches.notifications');
